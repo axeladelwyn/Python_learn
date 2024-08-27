@@ -11,11 +11,11 @@ def is_even(i):
     else:
         return False
 
-# is_even(3) # <- returns False
-# is_even(8) # <- returns True
+is_even(3) # <- returns False
+is_even(8) # <- returns True
 
-# print(is_even(3)) # <- prints False
-# print(is_even(8)) # <- prints True
+print(is_even(3)) # <- prints False
+print(is_even(8)) # <- prints True
 
 
 
@@ -26,22 +26,26 @@ def div_by(n, d):
         Returns True if d divides n evenly and False otherwise 
     """
     # your code here
-
+    print(f"inside is_even")
+    if n % d == 0:
+        return True
+    else:
+        return False
 
 # For example: 
-# print(div_by(10,3))     # print False
-# print(div_by(195,13))   # returns True
+print(f" 10 divided by 3 is {div_by(10,3)}")     # print False
+print(f" 192 divided by 3 is {div_by(195,13)}")   # returns True
 
 ##############################################
 
 # # Using the is_even function later on in the code
 # print("Numbers between 1 and 10: even or odd")
 
-# for i in range(1,10):
-#     if is_even(i):
-#         print(i, "even")
-#     else:
-#         print(i, "odd")
+for i in range(1,100):
+    if is_even(i):
+        print(i, "even")
+    else:
+        print(i, "odd")
 
 
 
@@ -82,7 +86,17 @@ def is_palindrome(s):
     Returns True if s is a palindrome and False otherwise
     """
     # your code here
+    s = s.lower()
+    # remove spaces and non-alphanumberic character
+    s = ''.join(char for char in s if char.isalnum())
+    reverse = s[::-1]
+    if s == reverse: ## check whether its palindrome or not
+        print(f"{s[::-1]}")
+        return True
+    else:
+        return False
 
+print(f"{is_palindrome("racecar")}")
 ################################################
 
 ################################################
@@ -95,11 +109,20 @@ def keep_consonants(word):
         of word in the order they appear
     """
     # your code here
+    consonants = "bcdefghjklmnpqrstvwxz"
+    consonants_word = ""
+
+    # iterate throught the word list
+    for char in word:
+        if char in consonants:
+            consonants_word += char
+    return consonants_word
+
 
 # For example
-# print(keep_consonants("abcd"))  # prints bcd
-# print(keep_consonants("aaa"))  # prints an empty string
-# print(keep_consonants("babas"))  # prints bbs
+print(keep_consonants("abcd"))  # prints bcd
+print(keep_consonants("aaa"))  # prints an empty string
+print(keep_consonants("babas"))  # prints bbs
 
 
 
@@ -111,11 +134,24 @@ def first_to_last_diff(s, c):
         occur in s, returns -1. 
     """
     # your code here
+    first_index = -1
+    last_index = -1
+
+
+    for i in range(len(s)):
+        if s[i] ==  c:
+            if first_index == -1:
+                first_index = i
+            last_index = i
+    if first_index == -1:
+        return -1
+
+    return last_index - first_index
 
 # For example
-# print(first_to_last_diff('aaaa', 'a'))  # prints 3
-# print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
-# print(first_to_last_diff('abcabcabc', 'b'))  # prints -1
+print(first_to_last_diff('aaaa', 'a'))  # prints 3
+print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
+print(first_to_last_diff('abcabcabc', 'd'))  # prints -1
 
 
 ################################################
