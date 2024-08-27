@@ -1,167 +1,217 @@
-# Recall the approximation method code to find the square root
-# x = 54321
-# epsilon = 0.01
-# num_guesses = 0
-# guess = 0.0
-# increment = 0.0001   # try it with 0.00001
-# while abs(guess**2 - x) >= epsilon and guess**2 <= x:
-#     # abs(guess**2 - x) >= epsilon finds a "good enough" answer
-#     # guess**2 <= x ensures we stop looking when the guess becomes unreasonable
-#     guess += increment
-#     num_guesses += 1
-# print(f'num_guesses = {num_guesses}')
-# 
-# # this "if" is for the case when we stopped the loop due to an unreasonable guess
-# if abs(guess**2 - x) >= epsilon:
-#     print(f'Failed on square root of {x}')
-#     print(f'Last guess was {guess}')
-#     print(f'Last guess squared is {guess*guess}')
-# # this "else" is for the case when we stopped the loop due to being within epsilon of x
-# else:
-#     print(f'{guess} is close to square root of {x}')
+###########################
+#### EXAMPLE: applying functions to repeat same task many times
+###########################
+#A very simple example of a function that has one
+#argument and returns one value
+def is_even(i):   
+    """Assumes: i, a positive int
+    Returns True if i is even, otherwise False"""
+    if i%2 == 0:
+        return True
+    else:
+        return False
 
+# is_even(3) # <- returns False
+# is_even(8) # <- returns True
 
-#####################
-## EXAMPLE: fast square root using bisection search
-#####################
-
-x = 54321  # try 0.5
-epsilon = 0.01
-num_guesses = 0
-low = 0.0
-high = x
-guess = (high + low)/2
-while abs(guess**2 - x) >= epsilon:
-   # uncomment to see each step's guess, high, and low 
-   #print(f'low = {str(low)} high = {str(high)} guess = {str(guess)}')
-   if guess**2 < x:
-       low = guess
-   else:
-       high = guess
-   guess = (high + low)/2.0
-   num_guesses += 1
-print(f'num_guesses = {str(num_guesses)}')
-print(f'{str(guess)} is close to square root of {str(x)}')
+# print(is_even(3)) # <- prints False
+# print(is_even(8)) # <- prints True
 
 
 
-############### YOU TRY IT ###################
-# x = 0.5
-# epsilon = 0.01
-# # choose the low endpoint
-# low = ???
-# # choose the high endpopint
-# high = ???
+############## YOU TRY IT ###################
+# Write code that satisfies the following specification:
+def div_by(n, d):
+    """ n and d are ints > 0
+        Returns True if d divides n evenly and False otherwise 
+    """
+    # your code here
 
-# guess = (high + low)/2
 
-# while abs(guess**2 - x) >= epsilon:
-#     #print(f'low = {str(low)} high = {str(high)} guess = {str(guess)}')
-#     if guess**2 < x:
-#         low = guess
+# For example: 
+# print(div_by(10,3))     # print False
+# print(div_by(195,13))   # returns True
+
+##############################################
+
+# # Using the is_even function later on in the code
+# print("Numbers between 1 and 10: even or odd")
+
+# for i in range(1,10):
+#     if is_even(i):
+#         print(i, "even")
 #     else:
-#         high = guess
-#     guess = (high + low)/2.0
-# print(f'{str(guess)} is close to square root of {str(x)}')
-
-#####################################################
+#         print(i, "odd")
 
 
-#####################
-## Code for square root with all x values
-#####################
-#x = 0.5
-#epsilon = 0.01
-#if x >= 1:
-#    low = 1.0
-#    high = x
-#else:
-#    low = x
-#    high = 1.0
-#guess = (high + low)/2
-#
-#while abs(guess**2 - x) >= epsilon:
-#    print(f'low = {str(low)} high {str(high)} guess = {str(guess)}')
-#    if guess**2 < x:
-#        low = guess
-#    else:
-#        high = guess
-#    guess = (high + low)/2.0
-#print(f'{str(guess)} is close to square root of {str(x)}')
+
+###########################
+### EXAMPLE: sum of all odd numbers between (including) a and b
+###########################
+## with a for loop
+def sum_odd(a, b):
+    sum_of_odds = 0
+    for i in range(a, b+1):
+        if i%2 == 0:
+            sum_of_odds += i
+            print(i, sum_of_odds)
+    return sum_of_odds
+
+# print(sum_odd(2,4)) 
+# print(sum_odd(2,7)) 
+
+# # with a while loop
+def sum_odd(a, b):
+    sum_of_odds = 0
+    i = a
+    while i <= b:
+        if i%2 == 1:
+            sum_of_odds += i
+        i += 1
+    return sum_of_odds
+
+# print(sum_odd(2,4)) 
+# print(sum_odd(2,7)) 
 
 
-################# YOU TRY IT #######################
-# Write code to use bisection search to find the cube 
-# root of positive cubes to within some epsilon
+############## YOU TRY IT ###################
+# Write code that satisfies the following specification:
+# Hint, use paper and pen for a strategy before coding!
+def is_palindrome(s):
+    """ s is a string
+    Returns True if s is a palindrome and False otherwise
+    """
+    # your code here
 
-cube = 27
-epsilon = 0.01
-low = 0
-high = cube
+################################################
 
-# your code here
+################################################
+################ YOU TRY IT AT HOME #####################
+################################################
+# 1. Write code that satisfies the following specs:
+def keep_consonants(word):
+    """ word is a string of lowercase letters
+        Returns a string containing only the consonants 
+        of word in the order they appear
+    """
+    # your code here
+
+# For example
+# print(keep_consonants("abcd"))  # prints bcd
+# print(keep_consonants("aaa"))  # prints an empty string
+# print(keep_consonants("babas"))  # prints bbs
 
 
-#####################################################
+
+# 2. Write code that satisfies the following specs:
+def first_to_last_diff(s, c):
+    """ s is a string, c is single character string
+        Returns the difference between the index where c first
+        occurs and the index where c last occurs. If c does not 
+        occur in s, returns -1. 
+    """
+    # your code here
+
+# For example
+# print(first_to_last_diff('aaaa', 'a'))  # prints 3
+# print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
+# print(first_to_last_diff('abcabcabc', 'b'))  # prints -1
 
 
-######## Cube root for all cubes ############
-# cube = -27
-# neg = False
-# if cube < 0:
-#     neg = True
-# cube = abs(cube)
-# epsilon = 0.01
-# low = 0
-# high = cube
-# guess = (high + low)/2.0
-# while abs(guess**3 - cube) >= epsilon:
-#     if guess**3 < cube :
-#         low = guess
+################################################
+################################################
+################################################
+
+################################################
+########## ANSWERS TO YOU TRY IT #######
+################################################
+# def div_by(n, d):
+#     """ n and d are ints > 0
+#         Returns True if d divides n evenly and False otherwise 
+#     """
+#     # your code here
+#     # one way
+#     if n%d==0:
+#         return True
 #     else:
-#         high = guess
-#     guess = (high + low)/2.0
-# if neg == True:
-#     guess = -guess
-# print(f'{guess} is close to the cube root of {cube}')
+#         return False
+#     # another way: 
+#     # return n%d==0
+    
+# print(div_by(10,3))    
+# print(div_by(195,13))    
 
 
-########################
-## EXAMPLE: Newton-Raphson to find roots
-######################
-# epsilon = 0.01
-# k = 24  # try 54321
-# guess = k/2.0
-# num_guesses = 0
+# def is_palindrome(s):
+#     """ s is a string
+#     Returns True if s is a palindrome and False otherwise
+#     """
+#     # your code here
+#     for i in range(len(s)//2):
+#         if s[i] != s[len(s)-i-1]:
+#             return False
+#     return True        
 
-# while abs(guess*guess - k) >= epsilon:
-#     num_guesses += 1
-#     guess = guess - (((guess**2) - k)/(2*guess))
-# print(f'num_guesses = {str(num_guesses)}')
-# print(f'Square root of {str(k)} is about {str(guess)}')
+# s="2222"
+# print(is_palindrome(s))
+
+# s="222"
+# print(is_palindrome(s))
+
+# s="abc"
+# print(is_palindrome(s))
 
 
-#################################################################
-################# ANSWERS TO YOU TRY IT #######################
-#################################################################
-# Write code to use bisection search to find the cube 
-# root of positive cubes to within some epsilon
+################################################
+########## ANSWERS TO YOU TRY IT AT HOME #######
+################################################
+def keep_consonants(word):
+    """ word is a string of lowercase letters
+        Returns a string containing only the consonants 
+        of word in the order they appear
+    """
+    vowels = "aeiou"
+    ans = ""
+    for char in word:
+        if char not in vowels:
+            ans += char
+    return ans
 
-# cube = 27
-# epsilon = 0.01
-# low = 0
-# high = cube
-# guess = (high + low)/2.0
-# while abs(guess**3 - cube) >= epsilon:
-#     if guess**3 < cube :
-#         low = guess
-#     else:
-#         high = guess
-#     guess = (high + low)/2.0
-#     numGuesses += 1
-# print('numGuesses =', numGuesses)
-# print(guess, 'is close to the cube root of', cube)
+# For example:
+# print(keep_consonants("abcd"))  # prints bcd
+# print(keep_consonants("aaa"))  # prints an empty string
+# print(keep_consonants("babas"))  # prints bbs
 
-#################################################################
-#################################################################
-#################################################################
+
+def first_to_last_diff(s, c):
+    """ s is a string, c is single character string
+        Returns the difference between the index where c first
+        occurs and the index where c last occurs. If c does not 
+        occur in s, returns -1. 
+    """
+    if c not in s:
+        return -1
+    # if reach here, c is in s
+    for i in range(len(s)):
+        if s[i]==c:
+            # break here to save i as the first instance of c in s
+            break
+    # loop through s backwards
+    for j in range(len(s)-1,-1,-1):
+        if s[j]==c:
+            # break here to save j as the last instance of c in s
+            break
+    # this return is ok becasue the loops iterated through indices not chars of s
+    return j-i
+
+# For example
+# print(first_to_last_diff('aaaa', 'a'))  # prints 3
+# print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
+# print(first_to_last_diff('xyz', 'b'))  # prints -1
+
+################################################
+################################################
+################################################
+
+
+
