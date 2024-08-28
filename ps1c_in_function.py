@@ -1,9 +1,5 @@
 def part_c(initial_deposit):
 	#########################################################################
-	
-	##################################################################################################
-	## Determine the lowest rate of return needed to get the down payment for your dream home below ##
-	#################################################################################################
 	cost_of_house = 800000
 	down_payment_percentage = 0.25
 	months = 36
@@ -16,7 +12,9 @@ def part_c(initial_deposit):
 	steps = 0
 	max_steps = 1000
 	r = None
-	# Check if the initial deposit is already sufficient
+	##################################################################################################
+	## Determine the lowest rate of return needed to get the down payment for your dream home below ##
+	#################################################################################################
 	if initial_deposit >= down_payment - epsilon:
 	    r = 0.0
 	else:
