@@ -244,8 +244,9 @@ def max_of_both(n, f1, f2):
     Returns the maximum value of all these results.
     """
     # your code here
-    results = [f1(i) + f2(i) for i in range(n+1)]
+    results = [f1(i) + f2(i) for i in range(n + 1)]
     return max(results)
+
 
 print(max_of_both(2, lambda x:x-1, lambda x:x+1))  # prints 3
 print(max_of_both(10, lambda x:x*2, lambda x:x/2))  # prints 20
@@ -404,3 +405,84 @@ def h(x):
 ###################################
 ##################################
 ###################################
+
+
+def find_root_bounds(x,power):
+    """ x a float, power a popsitive int reutnr low,
+     high such that low**power <=x and high**power >= x
+    """
+    low = min(-1,x)
+    high = max(1,x)
+    return low,high
+
+def bisection_solve(x, eval_ans, epsilon, low, high):
+    """ x, epsilon, low, high are floats 
+    epsilon > 0 low <= high and there is an ans between low and high s.t. anws**power is within
+    epsilon of x"""
+
+    ans = (high + low) / 2
+    while abs(eval_ans(ans) - x) >= epsilon:
+        if eval_ans(ans) < x:
+            low = ans
+        else:
+            high = ans
+        ans = (high + low) / 2
+    return ans
+
+def find_root(x,power, epsilon):
+    """ assumes x and epsilon int or float, power an int, epsilon > 0 & power >= 1 
+    returns float y such that y**power is within epsilon of x. If such a float does note xist, it returns None"""
+    if x < 0 and power%2 == 0:
+        return None #Negative number has no even-powered roots
+    low , high = find_root_bounds(x, power)
+    return bisection_solve(x, power, epsilon, low, high)
+
+def square(ans):
+    return ans**2
+
+low, high = find_root_bounds(99, 2)
+print(bisection_solve(99, lambda ans: ans**2, 0.01, low, high))
+
+# print(find_root(5, 2, 0.01))
+
+my_lambda = lambda x, y: None if y == 0 else x / y
+print(my_lambda(10,2))
+
+# def create_eval_ans():
+#     power = input("Enter a positive integer: ")
+#     return lambda ans: ans**int(power)
+
+# eval_ans = create_eval_ans()
+
+# print(bisection_solve(99, eval_ans, 0.01, low, high))
+
+
+def log(x, base, epsilon):
+    """ assumes x and epsilon int or float, base an int,
+     x > 1, epsilon > 1 & power >= 1 """
+    def find_log_bounds(x,base):
+        upper_bound = 0
+        while base**upper_bound < x:
+            upper_bound += 1
+        return upper_bound - 1, upper_bound
+    low, high = find_log_bounds(x, base)
+    return bisection_solve(x, lambda ans: base**ans, epsilon, low, high)
+
+print(f"{log(29, 5, 0.01)}")
+
+s = "weirouwe;lkdfjaskl;df"
+
+print(s.find('sub'))
+
+
+def find_last(s, sub):
+    """ s and sub are non-empty strings
+    returns the index of the last occurence of sub in s.
+    returns none if sub does not occur in s"""
+    if s.rfind(sub) == -1:
+        return None
+    else:
+        return s.rfind(sub)    
+
+print(find_last("abcbcd", "bcd"))
+
