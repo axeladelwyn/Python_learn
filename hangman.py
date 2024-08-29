@@ -100,57 +100,54 @@ def get_available_letters(letters_guessed):
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
     # Return string in alphabetical order
-    all_letters = list(string.ascii_lowercase)
-    for letter in letters_guessed:
-      if letter in all_letters:
-        all_letters.remove(letter)
-    return all_letters
-print(f"{get_available_letters("buncis")}")
+    all_letters = set(string.ascii_lowercase)
+    remaining_letters = all_letters - set(letters_guessed)
+    return "".join(sorted(remaining_letters))
+
 
 
 def hangman(secret_word, with_help):
-    """
-    secret_word: string, the secret word to guess.
-    with_help: boolean, this enables help functionality if true.
-
-    Starts up an interactive game of Hangman.
-
-    * At the start of the game, let the user know how many
-      letters the secret_word contains and how many guesses they start with.
-
-    * The user should start with 10 guesses.
-
-    * Before each round, you should display to the user how many guesses
-      they have left and the letters that the user has not yet guessed.
-
-    * Ask the user to supply one guess per round. Remember to make
-      sure that the user puts in a single letter (or help character '!'
-      for with_help functionality)
-
-    * If the user inputs an incorrect consonant, then the user loses ONE guess,
-      while if the user inputs an incorrect vowel (a, e, i, o, u),
-      then the user loses TWO guesses.
-
-    * The user should receive feedback immediately after each guess
-      about whether their guess appears in the computer's word.
-
-    * After each guess, you should display to the user the
-      partially guessed word so far.
-
-    -----------------------------------
-    with_help functionality
-    -----------------------------------
-    * If the guess is the symbol !, you should reveal to the user one of the
-      letters missing from the word at the cost of 3 guesses. If the user does
-      not have 3 guesses remaining, print a warning message. Otherwise, add
-      this letter to their guessed word and continue playing normally.
-
-    Follows the other limitations detailed in the problem write-up.
-    """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    if with_help == True:
-      pass
+    # append user input to letter guessed
+    guess = 10
+    letters_guessed = set()
 
+    print(f"Welcome to Hangman!")
+    print(f"I am thinking of a word that is {len(secret_word)} letters long.")
+
+    print(f"--------------------------------")
+    while True:
+      print(f"You currently have {guess} guess left.")
+      print(f"Available letters: {get_available_letters(letters_guessed)}")
+      user_input = input("Please guess a letter: ")
+      if with_help and user_input == "!":
+          # Implement the help functionality
+          missing_letters = set(secret_word) - letters_guessed
+          if missing_letters:
+              revealed_letter = missing_letters.pop()
+              print(f"Letter revealed '{revealed_letter}'")
+              guess -= 3
+          else:
+              print("No missing letters to reveal.")
+      else:
+          if user_input.isalpha() and user_input.islower() and len(user_input) == 1:
+            if user_input in letters_guessed:
+                print(f"You've already guessed '{user_input}'. Try a different letter.")
+            else:
+                letters_guessed.add(user_input)
+                guess -= 1
+                print(get_word_progress(secret_word, letters_guessed))  # Implement get_word_progress
+                if all(letter in letters_guessed for letter in secret_word):
+                    print("Congratulations! You've won the game.")
+                    break
+          else:
+            print("Please enter a valid alphabetic string!")
+      if guess == 0:
+        print(f"Game over! The secret word was '{secret_word}'.")
+        break
+
+    # Return whether the player has won (you need to implement this)
+    return has_player_won
     
 
 
@@ -161,9 +158,9 @@ def hangman(secret_word, with_help):
 if __name__ == "__main__":
     # To test your game, uncomment the following three lines.
 
-    # secret_word = choose_word(wordlist)
-    # with_help = False
-    # hangman(secret_word, with_help)
+    secret_word = choose_word(wordlist)
+    with_help = False
+    hangman(secret_word, with_help)
 
     # After you complete with_help functionality, change with_help to True
     # and try entering "!" as a guess!

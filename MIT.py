@@ -302,3 +302,135 @@ def sublist_sum(L):
     
 
 # print(sublist_sum([[1,2], [4,5,6]])) # prints 18
+
+print(f"######################################################################")
+t1 = (1, 'two', 3)
+t2 = (t1, 3.25)
+print(f"This is t2 {t2}")
+print(f"This is t1 + t2 {(t1 + t2)}")
+print(f"this is t1 + t2 index  {(t1 + t2)[4]}")
+print(f"This is t1 + t2 index  {(t1 + t1)[2:5]}")
+
+
+def intersect(t1, t2):
+    """Assumes t1 and t2 are tuples
+    Returns a tuple containing elemnts that are in both t1 and t2"""
+    result = ()
+
+    for e in t1:
+    # e is 1, "a", 2
+        if e in t2:
+            result += (e,)
+    return result
+
+print(intersect((1, "a", 2), ("b", 2, "a")))
+
+
+def find_extreme_divisors(n1 , n2):
+    """Assumes that n1 and n2 are positive ints
+    Return a tuple containing the smallest common divisor > 1 and 
+    the largest common divisofr of n1 & n2. If no common diviros,
+    other than 1, reutnrs (none, None)"""
+    min_val, max_val = None, None
+    for i in range(2, min(n1, n2) + 1):
+        if n1%i == 0 and n2%i == 0:
+            if min_val == None:
+                min_val = i
+            max_val = i
+    return min_val, max_val
+
+print(find_extreme_divisors(100, 200))
+
+for elem in (1,"a", 2, (3,4)):
+    print(elem)
+
+def sum_of_tuples(tup):
+    """Write an expression that evaluates to the mean of a tuple of numbmers.
+    Use the function sum"""
+    # calculate the tuples 
+    # sum the content of the tuples
+    # average the tuples using the mean function
+    total = 0
+    for i in tup:
+        total += i
+
+    mean_of_tuple = total/len(tup)
+    return mean_of_tuple
+
+print(sum_of_tuples((1,3,4,5)))
+
+L = ["Asep draksistema", 5, "gagagugu"]
+for i in  L:
+    print (i)
+print(L[::-1])
+
+print(f"###########################")
+L1 = [1,2,3]
+L2 = L1[-1::-1]
+print(L1)
+print(L2)
+for i in range(len(L1)):
+    # will iterate 3 times
+    # 0 , 1 , 2
+    print(L1[i]*L2[i])
+    # 1 * 3 , 2 * 2, 3 * 1
+    # match the index 
+    
+
+Techs = ["MIT", "Caltech"]
+Ivys = ["Harvard", "Yale", "Brown"]
+Techs.append("RPI")
+
+# Combines the two list together
+Univs = [Techs, Ivys]
+# This one is different ?
+Univs1 = [["MIT", "Caltech"], ["Harvard", "Yale", "Brown"]]
+
+print(Univs)
+print(Univs1)
+print(Univs == Univs1)
+print(id(Univs) == id(Univs1)) # test object equality
+print(Univs is Univs1)
+
+print(f"################################ ID OF Objects ########################################")
+print(f"Id of univs = {id(Univs)}")
+print(f"Id of univs1 = {id(Univs1)}")
+print(f"Ids of Univs[0] and Univs[1] {id(Univs[0])} {id(Univs[1])}")
+print(f"Ids of Univs1[0] and Univs1[1] {id(Univs1[0])} {id(Univs1[1])}")
+print(f"##########################################")
+
+L = [1, 2, 3]
+L.append(L)
+print(L is L[-1])
+print(f"############################################")
+def append_val(val, list_1 = []):
+    list_1.append(val)
+    print(list_1)
+append_val(3)
+list_2 = []
+append_val(4, list_2)
+print(f"##############################")
+
+Techs.append(Ivys)
+print(Techs)
+
+L1 = [1, 2, 3]
+L2 = [4, 5 ,6]
+L3 = L1 + L2
+print(f"L3 = {L3}")
+L1.extend(L2)
+print(f"L1 = {L1}")
+L1.append(L2)
+print(f"L1 = {L1}")
+print(f"#######################")
+L1 = [1, 2, 3]
+index_L1 = L1.index(1)
+reverse = L1.reverse()
+print(index_L1)
+print(L1.sort())
+print(reverse)
+L1.pop(0)
+print(L1)
+
+
+
