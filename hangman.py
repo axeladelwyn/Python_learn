@@ -55,8 +55,16 @@ def has_player_won(secret_word, letters_guessed):
         False otherwise
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
+    secret_word = secret_word.lower().replace(" ", "")
+    secret_word = secret_word.replace(" ", "")
+    # iterate through all the letter in letter guess and match 
+    # match and compare with secret word
+    for letter in secret_word:
+      if letter not in letters_guessed:
+        return False
+    print("You've won!")
+    return True
+print(has_player_won("buncis", "buncs"))
 
 def get_word_progress(secret_word, letters_guessed):
     """
@@ -68,8 +76,18 @@ def get_word_progress(secret_word, letters_guessed):
         which letters in secret_word have not been guessed so far
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
+    # Check letters gusssed input
+    # print the letter guessed
+    guessed_letter = ""
+    for i in secret_word:
+      if i in letters_guessed:
+        guessed_letter += i
+      else:
+        guessed_letter += "*"
+      # if letter is guessed then show it
+      # append letter to the guessed letter
+    return guessed_letter
+print(get_word_progress("buncas", "buncos"))
 
 def get_available_letters(letters_guessed):
     """
@@ -81,8 +99,13 @@ def get_available_letters(letters_guessed):
       alphabetical order
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
+    # Return string in alphabetical order
+    all_letters = list(string.ascii_lowercase)
+    for letter in letters_guessed:
+      if letter in all_letters:
+        all_letters.remove(letter)
+    return all_letters
+print(f"{get_available_letters("buncis")}")
 
 
 def hangman(secret_word, with_help):
@@ -125,7 +148,10 @@ def hangman(secret_word, with_help):
     Follows the other limitations detailed in the problem write-up.
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    if with_help == True:
+      pass
+
+    
 
 
 
