@@ -1,329 +1,320 @@
-#################
-## EXAMPLE: change value in a list and appending a value to a list
-###############
-# L = [2, 4, 3]
+
+## remove from a list
+# L = [2,1,3,6,3,7,0]
+# L.remove(2)
+# L.remove(3)
+# del(L[1])
+# print(L.pop())
+
+
+#############
+## Removing elements
+#############
+
+# L = [2,1,3,6,3,7,0] 
+# L.pop(5)
 # print(L)
-# L[1] = 5
+# L.remove(3)
 # print(L)
-# L = L.append(5)
+# L.pop()
 # print(L)
-
-
-############# YOU TRY IT #####################
-# What is the value of L1, L2, L3, and L after these commands?
-# L1 = ['re']
-# L2 = ['mi']
-# L3 = ['do']
-# L4 = L1 + L2
-# L3.append(L4)
-# L = L2.append(L3)
-
-#################################################
-
-
-############### YOU TRY IT #######################
-# Write a function that meets the specification:
-def make_ordered_list(n):
-    """ n is a positive int
-    Returns a list containing all ints in order 
-    from 0 to n (inclusive)
-    """
-    # your code here
-
-    
-#print(make_ordered_list(6))  # prints [0, 1, 2, 3, 4, 5, 6]
-
-#####################################################
 
 
 ############ YOU TRY IT ###############
-def remove_elem(L, e):
+# This one is similar to remove_elem from lec10 except that remove_elem 
+# returns a new list and this one mutates the parameter L (and returns None)
+def remove_all(L, e):
     """ 
     L is a list
-    Returns a new list with elements in the same order as L
-    but without any elements equal to e. 
+    Mutates L to remove all elements in L that are equal to e
+    Returns None.
     """
     # your code here
+    
 
-  
-# L = [1,2,2,2]
-# print(remove_elem(L, 2))    # prints [1]
-# L = [1,2,2,2]
-# print(remove_elem(L, 1))    # prints [2,2,2]
-# L = [1,2,2,2]
-# print(remove_elem(L, 0))    # prints [1,2,2,2]
+# Lin = [1,2,2,2]
+# remove_all(Lin, 2)
+# print(Lin)    # prints [1]
 
+# Lin = [1,2,2,2]
+# remove_all(Lin, 1)
+# print(Lin)    # prints [2, 2, 2]
+
+# Lin = [1,2,2,2]
+# remove_all(Lin, 0)
+# print(Lin)    # prints [1, 2, 2, 2]
 
 #######################################
 
-#################
-## EXAMPLE: string-list ops
-#################
-# s = "I<3 cs and u?"		
-# L = list(s) 	
-# L1 = s.split(' ')	
-# L2 = s.split('<')
-# print(L)
+def remove_all(L, e):
+    """ 
+    L is a list
+    Mutates L to remove all elements in L that are equal to e
+    Returns None.
+    """
+    while e in L:
+        L.remove(e)
+
+# Lin = [1,2,2,2]
+# remove_all(Lin, 2)
+# print(Lin)    # prints [1]
+
+
+## this function does not do the right thing
+def remove_all(L, e):
+    """ 
+    L is a list
+    Mutates L to remove all elements in L that are equal to e
+    Returns None.
+    """
+    for elem in L:
+        if elem == e:
+            L.remove(e)
+
+# Lin = [1,2,2,2]
+# remove_all(Lin, 2)
+# print(Lin)    # INCORRECTLY prints [1,2]
+
+
+
+#############
+## TRICKY EXAMPLE 4: removing element as you are mutating a list
+#############
+## this is an incorrect way to do it
+def remove_dups(L1, L2):
+    for e in L1:
+        if e in L2:
+            L1.remove(e)
+
+# L1 = [10, 20, 30, 40]
+# L2 = [10, 20, 50, 60]
+# remove_dups(L1, L2)
 # print(L1)
-# print(L2)
 
-# L = ['a','b','c']
-# A = ''.join(L)	
-# print(A)
-# B = '_'.join(L)	
-# print(B)
+## this is an incorrect way to do it
+def remove_dups(L1, L2):
+    L1_copy = L1 # not actually a copy, just an alias!!
+    for e in L1:
+        if e in L2:
+            L1.remove(e)
 
-# Lnum = [1, 2, 3]
-# # n = ''.join(Lnum)  # this line throws an error
-# Lnum = ['1', '2', '3']
-# n = ''.join(Lnum)
-# print(n)
+# L1 = [1, 2, 3, 4]
+# L2 = [1, 2, 5, 6]
+# remove_dups(L1, L2)
+# print(L1)
 
-####### YOU TRY IT ###################
-# Write a function that meets this specification
-def count_words(sen):
-    """ sen is a string representing a sentence 
-    Returns how many words are in sen (i.e. a word is a 
-    a sequence of characters between spaces. """
-    # your code here
+## this is the CORRECT way to do it
+def remove_dups(L1, L2):
+    L1_copy = L1[:] # actually a copy aka clone
+    for e in L1_copy:
+        if e in L2:
+            L1.remove(e)
+
+# L1 = [1, 2, 3, 4]
+# L2 = [1, 2, 5, 6]
+# remove_dups(L1, L2)
+# print(L1)
 
 
-# s = "Hello it's me"
-# print(count_words(s))   # prints 3
 
-# s = "I just took a DNA test turns out I'm 100% splitting strings"
-# print(count_words(s))   # prints 12
 
+############################
+############################
+## Control copying, alises
+# old_list = [[1,2],[3,4],[5,'foo']]
+# new_list = old_list
+
+# new_list[2][1] = 6
+# print("New list:", new_list)
+# print("Old list:", old_list)
+
+## Control copying, shallow copy
+# import copy
+# old_list = [[1,2],[3,4],[5,6]]
+# new_list = copy.copy(old_list)
+
+# old_list.append([7,8])
+# old_list[1][1] = 9
+# print("New list:", new_list)
+# print("Old list:", old_list)
+
+## Control copying, deep copy
+# import copy
+# old_list = [[1,2],[3,4],[5,6]]
+# new_list = copy.deepcopy(old_list)
+
+# old_list.append([7,8])
+# old_list[1][1] = 9
+# print("New list:", new_list)
+# print("Old list:", old_list)
+
+
+
+## EXAMPLE: aliasing
+# a = 1
+# b = a
+# print(a)
+# print(b)
+
+# warm = ['red', 'yellow', 'orange']
+# hot = warm
+# hot.append('pink')
+# print(hot)
+# print(warm)
+
+## EXAMPLE: cloning
+# cool = ['blue', 'green', 'grey']
+# chill = cool[:]
+# chill.append('black')
+# print(chill)
+# print(cool)
+
+## EXAMPLE: sorting with/without mutation
+# warm = ['red', 'yellow', 'orange']
+# sortedwarm = warm.sort()
+# print(warm)
+# print(sortedwarm)
+
+# cool = ['grey', 'green', 'blue']
+# sortedcool = sorted(cool)
+# print(cool)
+# print(sortedcool)
+
+## EXAMPLE: lists of lists of lists...
+# warm = ['yellow', 'orange']
+# hot = ['red']
+# brightcolors = [warm]
+# brightcolors.append(hot)
+# print(brightcolors)
+# hot.append('pink')
+# print(hot)
+# print(brightcolors)
+
+
+############ YOU TRY IT AT HOME ###################
+# Step through the code below without running it
+# Write down what values each variable has
+# Draw the memory diagram to help you keep track of aliases and clones
+
+# cool = ['blue', 'green']
+# warm = ['red', 'yellow', 'orange']
+# print(cool)
+# print(warm)
+
+# colors1 = [cool]
+# print(colors1)
+# colors1.append(warm)
+# print('colors1 = ', colors1)
+
+# colors2 = [['blue', 'green'],
+#           ['red', 'yellow', 'orange']]
+# print('colors2 =', colors2)
+
+# warm.remove('red') 
+# print('colors1 = ', colors1)
+# print('colors2 =', colors2)
+
+# for e in colors1:
+#     print('e =', e)
+
+# for e in colors1:
+#     if type(e) == list:
+#         for e1 in e:
+#             print(e1)
+#     else:
+#         print(e)
+
+# flat = cool + warm
+# print('flat =', flat)
+
+# print(flat.sort())
+# print('flat =', flat)
+
+# new_flat = sorted(flat, reverse = True)
+# print('flat =', flat)
+# print('new_flat =', new_flat)
+
+# cool[1] = 'black'
+# print(cool)
+# print(colors1)
+
+###############################
+
+
+
+
+############################################
+################### AT HOME ######################
+############################################
+def repeat(L, n):
+    """ L is a list of ints
+        n is a positive int
+    Mutates L to contain whatever elements L has right now repeated n times. """
+    # your code here 
+    
+# Lin = [1,2,3]
+# repeat(Lin, 3)
+# print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
+
+# Think about why the following solution does not work!
+def repeat(L, n):
+    """ L is a list of ints
+        n is a positive int
+    Mutates L to contain whatever elements L has right now repeated n times. """
+    # your code here 
+    Lnew = []
+    for i in range(n):
+        for e in L:
+            Lnew.append(e)
+    Lin = Lnew  # hint, even thought we reuse the name Lin here, we make it point to a NEW object!
+    
+# Lin = [1,2,3]
+# repeat(Lin, 3)
+# print(Lin)   # prints [1, 2, 3] which is wrong!
+
+
+#######################################
+########## ANSWERS TO YOU TRY IT ###############
 ###########################################
 
-
-###################
-## EXAMPLE: sorting/reversing ops
-##################
-# L=[9,6,0,3]
-# a = sorted(L)
-# print(a)
-# print(L)
-# a = L.sort()
-# print(a)
-# print(L)
-# L.reverse()
-# print(L)
-
-
-############## YOU TRY IT #################
-# Write a function that meets this specification
-def sort_words(sen):
-    """ sen is a string representing a sentence 
-    Returns a list containing all the words in sen but
-    sorted in alphabetical order. """
-    # your code here
-
-
-# s = "look at this photograph"
-# print(sort_words(s))    # prints ['at', 'look', 'photograph', 'this']
-
-# s = "now this is a story all about how my life got flipped turned upside down"
-# print(sort_words(s))
-
-##########################################
-
-
-##############
-## Loops over lists
-################
-def square_list(L):
-    for i in range(len(L)): 
-        L[i] = L[i]**2
-
-# print(square_list([2,3,4]))  # prints None
-
-# Lin = [2,3,4]
-# print("before fcn call:",Lin)
-# square_list(Lin)
-# print("after fcn call:",Lin)   # mutated L
-
-
-
-##############
-## TRICKY EXAMPLE 1: append to L white iterating over range(L)
-##############
-# L = [1,2,3,4]
-# for i in range(len(L)):
-#     L.append(i) 
-#     print(L)
-
-
-##############
-## TRICKY EXAMPLE 2: append to L while iterating over L
-## this leads to an infinite loop
-##############
-# L = [1,2,3,4]
-# i = 0
-# for e in L:
-#     L.append(i)
-#     i += 1
-#     print(L)
-
-## extend a list
-# L1 = [2,1,3]
-# L2 = [4,5,6]
-# L3 = L1 + L2
-# L1.extend([0,6])
-# L2.extend([[0,2],[7,9]])
-
-##############
-## TRICKY EXAMPLE 3: combining
-##############
-# L = [1,2,3,4]
-# for e in L:
-#     L = L + L
-#     print(L)
-
-
-##############
-## Clear a list and check that it's the same object
-################
-# L = [4,5,6]
-# print(L)
-# print(id(L))
-# L.clear()
-# print(L)
-# print(id(L)) # same as 3 lines up, same object
-
-## vs.
-
-# L = [4,5,6]
-# print(L)
-# print(id(L))
-# L = []
-# print(L)
-# print(id(L))  # different than 3 lines up, different object!
-
-
-#######################################
-############# ANSWERS TO YOU TRY IT ##########################
-#######################################
-def make_ordered_list(n):
-    """ n is a positive int
-    Returns a list containing all ints in order 
-    from 0 to n (inclusive)
-    """
-    L = []
-    for i in range(n+1):
-        L.append(i)
-    return L
-
-# print(make_ordered_list(6))  # prints [0, 1, 2, 3, 4, 5, 6]
-
-def remove_elem(L, e):
+def remove_all(L, e):
     """ 
     L is a list
-    Returns a list with elements in the same order as L
-    but without any elements equal to e. 
-    """
-    Lout = []
-    for i in L:
-        if e != i:
-            Lout.append(i)
-    return Lout
+    Mutates L to remove all elements in L that are equal to e
+    """ 
+    Lnew = L[:]
+    L.clear()
+    for elem in Lnew:
+        if elem != e:
+            L.append(elem)
 
 # L = [1,2,2,2]
-# print(remove_elem(L, 1))    # prints [2,2,2]
+# remove_all(L, 1)
+# print(L)    # prints [2, 2, 2]
+
 # L = [1,2,2,2]
-# print(remove_elem(L, 2))    # prints [1]
+# remove_all(L, 2)
+# print(L)    # prints [1]
+
 # L = [1,2,2,2]
-# print(remove_elem(L, 0))    # prints [1,2,2,2]
+# remove_all(L, 0)
+# print(L)    # prints [1, 2, 2, 2]
 
-def count_words(s):
-    """ s is a string representing a sentence 
-    Returns how many words are in s (i.e. a word is a 
-    a sequence of characters between spaces. """
-    words = s.split(' ')
-    return len(words)
-
-# s = "Hello it's me"
-# print(count_words(s))   # prints 3
-
-# s = "I just took a DNA test turns out I'm 100% splitting strings"
-# print(count_words(s))   # prints 12
-
-def sort_words(s):
-    """ s is a string representing a sentence 
-    Returns a list containing all the words in s but
-    sorted in alphabetical order. """
-    words = s.split(' ')
-    # one way
-    return sorted(words)
-    # another way
-    words.sort()
-    return words
-
-# s = "look at this photograph"
-# print(sort_words(s))    # prints ['at', 'look', 'photograph', 'this']
-
-# s = "now this is a story all about how my life got flipped turned upside down"
-# print(sort_words(s))
 
 
 #######################################
-############ AT HOME ###############
-#######################################
-## Question 1
-# L1 = ['re']
-# L2 = ['mi']
-# L3 = ['do']
-# L4 = L1 + L2
-# L3.extend(L4)
-# L3.sort()
-# del(L3[0])
-# L3.append(['fa', 'la'])
-# What's the value of L3 here?
-
-## Question 2
-# L1 = ['bacon', 'eggs']
-# L2 = ['toast', 'jam']
-# brunch = L1
-# L1.append('juice')
-# brunch.extend(L2)
-# What's the value of brunch here?
-
-## Question 3. 
-def apply_to_each(L, f):
-    """ L is a list of numbers 
-        f is a list that takes in a number and returns a number
-    Mutate L such that you apply function f to every element in L """
-    # your code here
-
-# test = [1,-2,3]
-# apply_to_each(test, lambda x: x**2)
-# print(test)   # prints [1,4,9]
-
-# test = [-7, 8, 5, -8, -3]
-# apply_to_each(test, abs)
-# print(test)   # prints [7, 8, 5, 8, 3]
-
-
-
-########################################
-########## ANSWERS TO AT HOME ##############################
-########################################
-
-def apply_to_each(L, f):
-    """ L is a list of numbers 
-        f is a list that takes in a number and returns a number
-    Mutate L such that you apply function f to every element in L """
-    for i in range(len(L)): 
-        L[i] = f(L[i])
-
-# test = [1,-2,3]
-# apply_to_each(test, lambda x: x**2)
-# print(test)   # prints [1,4,9]
-
-# test = [-7, 8, 5, -8, -3]
-# apply_to_each(test, abs)
-# print(test)   # prints [7, 8, 5, 8, 3]
-
-
-############################
-############################
+########## ANSWERS TO AT HOME ###############
+###########################################
+def repeat(L, n):
+    """ L is a list of ints
+        n is a positive int
+    Mutates L to contain whatever elements L has right now repeated n times. """
+    # your code here 
+    rep = len(L)
+    for i in range(n-1):
+        for j in range(rep):
+            L.append(L[j])
+    
+# Lin = [1,2,3]
+# repeat(Lin, 3)
+# print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
