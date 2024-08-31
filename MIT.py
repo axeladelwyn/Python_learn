@@ -1,320 +1,226 @@
+## List comprehensions
 
-## remove from a list
-# L = [2,1,3,6,3,7,0]
-# L.remove(2)
-# L.remove(3)
-# del(L[1])
-# print(L.pop())
-
-
-#############
-## Removing elements
-#############
-
-# L = [2,1,3,6,3,7,0] 
-# L.pop(5)
+L = [e**2 for e in range(6)] 	
 # print(L)
-# L.remove(3)
+L = [e**2 for e in range(8) if e%2 == 0] 
 # print(L)
-# L.pop()
-# print(L)
+L = [[e,e**2] for e in range(4) if e%2 != 0] 
+print(L)
 
+# Equivalent function to a list comprehension
+# Notice how verbose this is!!
+def f(expr, old_list, test = lambda x: True):
+    new_list = []
+    for e in old_list:
+        if test(e):
+            new_list.append(expr(e))
+    return new_list
+result = f(lambda y: y**2, [0,1,2,3,4,5])
+print(result)
+########## YOU TRY IT #############
+## What is returned by this list comprehension expression?
+L = [x**2 for x in [2, 'a', 3, 4.0] if type(x) == int] # [4, 9]
+# Remove all element not inclduued in if
+print(L)
 
-############ YOU TRY IT ###############
-# This one is similar to remove_elem from lec10 except that remove_elem 
-# returns a new list and this one mutates the parameter L (and returns None)
-def remove_all(L, e):
-    """ 
-    L is a list
-    Mutates L to remove all elements in L that are equal to e
-    Returns None.
-    """
-    # your code here
-    
-
-# Lin = [1,2,2,2]
-# remove_all(Lin, 2)
-# print(Lin)    # prints [1]
-
-# Lin = [1,2,2,2]
-# remove_all(Lin, 1)
-# print(Lin)    # prints [2, 2, 2]
-
-# Lin = [1,2,2,2]
-# remove_all(Lin, 0)
-# print(Lin)    # prints [1, 2, 2, 2]
-
-#######################################
-
-def remove_all(L, e):
-    """ 
-    L is a list
-    Mutates L to remove all elements in L that are equal to e
-    Returns None.
-    """
-    while e in L:
-        L.remove(e)
-
-# Lin = [1,2,2,2]
-# remove_all(Lin, 2)
-# print(Lin)    # prints [1]
-
-
-## this function does not do the right thing
-def remove_all(L, e):
-    """ 
-    L is a list
-    Mutates L to remove all elements in L that are equal to e
-    Returns None.
-    """
-    for elem in L:
-        if elem == e:
-            L.remove(e)
-
-# Lin = [1,2,2,2]
-# remove_all(Lin, 2)
-# print(Lin)    # INCORRECTLY prints [1,2]
+###################################
 
 
 
-#############
-## TRICKY EXAMPLE 4: removing element as you are mutating a list
-#############
-## this is an incorrect way to do it
-def remove_dups(L1, L2):
-    for e in L1:
-        if e in L2:
-            L1.remove(e)
+## Keyword arguments aka default parameters
+#########################
+### EXAMPLE: bisection square root as a function (from lec 7)
+#########################
+# def bisection_root(x):
+#     epsilon = 0.01
+#     low = 0
+#     high = x
+#     guess = (high + low)/2.0
+#     while abs(guess**2 - x) >= epsilon:
+#         if guess**2 < x: 
+#             low = guess
+#         else: 
+#             high = guess
+#         guess = (high + low)/2.0
+#     return guess
 
-# L1 = [10, 20, 30, 40]
-# L2 = [10, 20, 50, 60]
-# remove_dups(L1, L2)
-# print(L1)
+# print(bisection_root(4))
+# print(bisection_root(123))
 
-## this is an incorrect way to do it
-def remove_dups(L1, L2):
-    L1_copy = L1 # not actually a copy, just an alias!!
-    for e in L1:
-        if e in L2:
-            L1.remove(e)
+#########################
+### EXAMPLE: improved bisection square root as a function
+# takes in x and an epsilon
+#########################
+print(f"############################")
+def bisection_root_new(x, epsilon):
+    num_guesses = 0
+    low = 0
+    high = x
+    guess = (high + low)/2.0
+    while abs(guess**2 - x) >= epsilon:
+        if guess**2 < x: 
+            low = guess
+        else: 
+            high = guess
+        guess = (high + low)/2.0
+        num_guesses += 1
+    print('num_guesses =', num_guesses)
+    return guess
 
-# L1 = [1, 2, 3, 4]
-# L2 = [1, 2, 5, 6]
-# remove_dups(L1, L2)
-# print(L1)
-
-## this is the CORRECT way to do it
-def remove_dups(L1, L2):
-    L1_copy = L1[:] # actually a copy aka clone
-    for e in L1_copy:
-        if e in L2:
-            L1.remove(e)
-
-# L1 = [1, 2, 3, 4]
-# L2 = [1, 2, 5, 6]
-# remove_dups(L1, L2)
-# print(L1)
-
-
-
-
-############################
-############################
-## Control copying, alises
-# old_list = [[1,2],[3,4],[5,'foo']]
-# new_list = old_list
-
-# new_list[2][1] = 6
-# print("New list:", new_list)
-# print("Old list:", old_list)
-
-## Control copying, shallow copy
-# import copy
-# old_list = [[1,2],[3,4],[5,6]]
-# new_list = copy.copy(old_list)
-
-# old_list.append([7,8])
-# old_list[1][1] = 9
-# print("New list:", new_list)
-# print("Old list:", old_list)
-
-## Control copying, deep copy
-# import copy
-# old_list = [[1,2],[3,4],[5,6]]
-# new_list = copy.deepcopy(old_list)
-
-# old_list.append([7,8])
-# old_list[1][1] = 9
-# print("New list:", new_list)
-# print("Old list:", old_list)
+# print(bisection_root_new(123, 0.1))
+# print(bisection_root_new(123, 0.00001))
 
 
+#########################
+### EXAMPLE: improved bisection square root as a function
+# takes in x and an epsilon as a default parameter
+#########################
+print(f"BISECTION WITH DEFAULT PARAMETER")
+def bisection_root_new(x, epsilon=0.01):
+    num_guesses = 0
+    low = 0
+    high = x
+    guess = (high + low)/2.0
+    while abs(guess**2 - x) >= epsilon:
+        if guess**2 < x: 
+            low = guess
+        else: 
+            high = guess
+        guess = (high + low)/2.0
+        num_guesses += 1
+    print('num_guesses =', num_guesses)
+    return guess
 
-## EXAMPLE: aliasing
-# a = 1
-# b = a
-# print(a)
-# print(b)
+print(bisection_root_new(123))
+print(bisection_root_new(123, 0.5))
+print(bisection_root_new(123, epsilon=0.00001))
+print(bisection_root_new(epsilon=0.001, x=123)) 
 
-# warm = ['red', 'yellow', 'orange']
-# hot = warm
-# hot.append('pink')
-# print(hot)
-# print(warm)
+#################
+print(f"EXAMPLE: function returning a function")
+#################
+def make_prod(a):
+    def g(b):
+        return a*b
+    return g
 
-## EXAMPLE: cloning
-# cool = ['blue', 'green', 'grey']
-# chill = cool[:]
-# chill.append('black')
-# print(chill)
-# print(cool)
-
-## EXAMPLE: sorting with/without mutation
-# warm = ['red', 'yellow', 'orange']
-# sortedwarm = warm.sort()
-# print(warm)
-# print(sortedwarm)
-
-# cool = ['grey', 'green', 'blue']
-# sortedcool = sorted(cool)
-# print(cool)
-# print(sortedcool)
-
-## EXAMPLE: lists of lists of lists...
-# warm = ['yellow', 'orange']
-# hot = ['red']
-# brightcolors = [warm]
-# brightcolors.append(hot)
-# print(brightcolors)
-# hot.append('pink')
-# print(hot)
-# print(brightcolors)
+# # call it this way 1
+# val = make_prod(4)(3)
+# print(val)
 
 
-############ YOU TRY IT AT HOME ###################
-# Step through the code below without running it
-# Write down what values each variable has
-# Draw the memory diagram to help you keep track of aliases and clones
-
-# cool = ['blue', 'green']
-# warm = ['red', 'yellow', 'orange']
-# print(cool)
-# print(warm)
-
-# colors1 = [cool]
-# print(colors1)
-# colors1.append(warm)
-# print('colors1 = ', colors1)
-
-# colors2 = [['blue', 'green'],
-#           ['red', 'yellow', 'orange']]
-# print('colors2 =', colors2)
-
-# warm.remove('red') 
-# print('colors1 = ', colors1)
-# print('colors2 =', colors2)
-
-# for e in colors1:
-#     print('e =', e)
-
-# for e in colors1:
-#     if type(e) == list:
-#         for e1 in e:
-#             print(e1)
-#     else:
-#         print(e)
-
-# flat = cool + warm
-# print('flat =', flat)
-
-# print(flat.sort())
-# print('flat =', flat)
-
-# new_flat = sorted(flat, reverse = True)
-# print('flat =', flat)
-# print('new_flat =', new_flat)
-
-# cool[1] = 'black'
-# print(cool)
-# print(colors1)
-
-###############################
-
-
-
-
-############################################
-################### AT HOME ######################
-############################################
-def repeat(L, n):
-    """ L is a list of ints
-        n is a positive int
-    Mutates L to contain whatever elements L has right now repeated n times. """
-    # your code here 
-    
-# Lin = [1,2,3]
-# repeat(Lin, 3)
-# print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
-
-# Think about why the following solution does not work!
-def repeat(L, n):
-    """ L is a list of ints
-        n is a positive int
-    Mutates L to contain whatever elements L has right now repeated n times. """
-    # your code here 
-    Lnew = []
-    for i in range(n):
-        for e in L:
-            Lnew.append(e)
-    Lin = Lnew  # hint, even thought we reuse the name Lin here, we make it point to a NEW object!
-    
-# Lin = [1,2,3]
-# repeat(Lin, 3)
-# print(Lin)   # prints [1, 2, 3] which is wrong!
+# # call it this way 2
+# doubler = make_prod(2)
+# val = doubler(3)
+# print(val)
 
 
 #######################################
-########## ANSWERS TO YOU TRY IT ###############
-###########################################
-
-def remove_all(L, e):
-    """ 
-    L is a list
-    Mutates L to remove all elements in L that are equal to e
-    """ 
-    Lnew = L[:]
-    L.clear()
-    for elem in Lnew:
-        if elem != e:
-            L.append(elem)
-
-# L = [1,2,2,2]
-# remove_all(L, 1)
-# print(L)    # prints [2, 2, 2]
-
-# L = [1,2,2,2]
-# remove_all(L, 2)
-# print(L)    # prints [1]
-
-# L = [1,2,2,2]
-# remove_all(L, 0)
-# print(L)    # prints [1, 2, 2, 2]
-
-
-
+print(f"STEPS TO DEBUG THE FOLLOWING BUGGY CODE") ########
 #######################################
-########## ANSWERS TO AT HOME ###############
-###########################################
-def repeat(L, n):
-    """ L is a list of ints
-        n is a positive int
-    Mutates L to contain whatever elements L has right now repeated n times. """
-    # your code here 
-    rep = len(L)
-    for i in range(n-1):
-        for j in range(rep):
-            L.append(L[j])
-    
-# Lin = [1,2,3]
-# repeat(Lin, 3)
-# print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
+## STEP 1: run it with test cases
+def is_pal(x):
+    """ Returns True is list x is a palindrome and False otherwise """
+    temp = x # what if temp changed and its changed x too
+    print(x) # 
+    temp.reverse 
+    if temp == x:
+        return True
+    else:
+        return False
+
+# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
+# print(is_pal(list('ab')))     # input is ['a','b']
+
+## STEP 2: add print statements about halfway through       
+def is_pal(x):
+    """ Returns True is list x is a palindrome and False otherwise """
+    temp = x
+    temp.reverse
+    print(temp, x)  # add this
+    if temp == x:
+        return True
+    else:
+        return False
+
+# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
+# print(is_pal(list('ab')))     # input is ['a','b']
+ 
+## STEP 3: Add more print statements before and after critical points
+def is_pal(x):
+    """ Returns True is list x is a palindrome and False otherwise """
+    temp = x
+    print('before reverse', temp, x)  # add this
+    temp.reverse
+    print('after reverse', temp, x)  # add this
+    if temp == x:
+        return True
+    else:
+        return False
+ 
+# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
+# print(is_pal(list('ab')))     # input is ['a','b']
+
+## STEP 4: Fix one issue, notice something is still wrong
+def is_pal(x):
+    """ Returns True is list x is a palindrome and False otherwise """
+    temp = x
+    print('before reverse', temp, x)
+    temp.reverse()                      # fix this
+    print('after reverse', temp, x)
+    if temp == x:
+        return True
+    else:
+        return False
+
+# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
+print(is_pal(list('ab')))     # input is ['a','b']
+
+## STEP 5: Recall with lists, aliasing/mutability is an issue
+def is_pal(x):
+    """ Returns True is list x is a palindrome and False otherwise """
+    temp = x[:]     # fix this
+    print('before reverse', temp, x)
+    temp.reverse()
+    print('after reverse', temp, x)
+    if temp == x:
+        return True
+    else:
+        return False
+
+print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
+print(is_pal(list('ab')))     # input is ['a','b']
+
+
+print(f"########## YOU TRY IT AT HOME #############")
+## Write a list comprehension expression that uses a list named L.
+# It makes a new list whose elements are the middle 
+# character of strings whose length is 3. 
+
+# If L = ['abc', 'm', 'p', 'xyz', '123', 57]
+# It makes ['b', 'y', '2']
+L = ['abc', 'm', 'p', 'xyz', '123', 57]
+# if len // 2 = 1
+# iterate through all the elements in the list and  only retrn the middle one
+remove_int_len = [x for x in L if len(str(x)) > 2]
+new_list = [x[len(x)//2] for x in remove_int_len if len(remove_int_len) % 2 != 0]
+print(new_list)
+## There is a file lec12_wordle.py that is buggy!
+## Try to fix the code to play the game correctly
+###################################
+
+
+########## ANSWERS TO YOU TRY IT AT HOME #############
+## Write a list comprehension expression that uses a list named L.
+# It makes a new list whose elements are the middle 
+# character of strings whose length is 3. 
+print(f"Answer##########################")
+# If L = ['abc', 'm', 'p', 'xyz', '123']
+# It makes ['b', 'y', '2']
+L = ['abc', 'm', 'p', 'xyz', '123', 57]
+print([e[1] for e in L if isinstance(e, str) and len(e) == 3])
+###################################
+
+
+
+

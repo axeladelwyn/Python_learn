@@ -7,6 +7,15 @@ def remove_and_sort(Lin, k):
     Does not return anything.
     """
     # Your code here  
+    # remove the first k element in lin using remove or pop?
+    # sort the List using sort() method
+    # If we remove all of things it becomes empty list
+    if k >= len(Lin):
+        Lin.clear()
+    else:
+        del Lin[:k] 
+
+    Lin.sort()
 
 # Examples:
 L = [1,6,3]
