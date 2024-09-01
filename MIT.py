@@ -1,226 +1,271 @@
-## List comprehensions
+######################################
+# EXAMPLE: Exceptions with summing digits in a string
+######################################
 
-L = [e**2 for e in range(6)] 	
-# print(L)
-L = [e**2 for e in range(8) if e%2 == 0] 
-# print(L)
-L = [[e,e**2] for e in range(4) if e%2 != 0] 
-print(L)
+# Not using exceptions
+def sum_digits(s):
+    """ s is a non-empty string containing digits
+    Returns sum of all characters that are digits """
+    total = 0
+    for char in s:
+        if char in '0123456789':
+            val = int(char)
+            total += val
+    return total
 
-# Equivalent function to a list comprehension
-# Notice how verbose this is!!
-def f(expr, old_list, test = lambda x: True):
-    new_list = []
-    for e in old_list:
-        if test(e):
-            new_list.append(expr(e))
-    return new_list
-result = f(lambda y: y**2, [0,1,2,3,4,5])
-print(result)
-########## YOU TRY IT #############
-## What is returned by this list comprehension expression?
-L = [x**2 for x in [2, 'a', 3, 4.0] if type(x) == int] # [4, 9]
-# Remove all element not inclduued in if
-print(L)
-
-###################################
+# print(sum_digits("123"))
+# print(sum_digits("123abc"))
 
 
+# Using exceptions around potentially problematic code
+# Print that an error happened and let the program keep going
+def sum_digits_except(s):
+    """ s is a non-empty string containing digits
+    Returns sum of all characters that are digits """
+    total = 0
+    for char in s:
+        try:
+            val = int(char)
+            total += val
+        except:
+            print("couldn't convert character", char)
+    return total
 
-## Keyword arguments aka default parameters
-#########################
-### EXAMPLE: bisection square root as a function (from lec 7)
-#########################
-# def bisection_root(x):
-#     epsilon = 0.01
-#     low = 0
-#     high = x
-#     guess = (high + low)/2.0
-#     while abs(guess**2 - x) >= epsilon:
-#         if guess**2 < x: 
-#             low = guess
-#         else: 
-#             high = guess
-#         guess = (high + low)/2.0
-#     return guess
-
-# print(bisection_root(4))
-# print(bisection_root(123))
-
-#########################
-### EXAMPLE: improved bisection square root as a function
-# takes in x and an epsilon
-#########################
-print(f"############################")
-def bisection_root_new(x, epsilon):
-    num_guesses = 0
-    low = 0
-    high = x
-    guess = (high + low)/2.0
-    while abs(guess**2 - x) >= epsilon:
-        if guess**2 < x: 
-            low = guess
-        else: 
-            high = guess
-        guess = (high + low)/2.0
-        num_guesses += 1
-    print('num_guesses =', num_guesses)
-    return guess
-
-# print(bisection_root_new(123, 0.1))
-# print(bisection_root_new(123, 0.00001))
+# print(sum_digits_except("123"))
+# print(sum_digits_except("123abc"))
 
 
-#########################
-### EXAMPLE: improved bisection square root as a function
-# takes in x and an epsilon as a default parameter
-#########################
-print(f"BISECTION WITH DEFAULT PARAMETER")
-def bisection_root_new(x, epsilon=0.01):
-    num_guesses = 0
-    low = 0
-    high = x
-    guess = (high + low)/2.0
-    while abs(guess**2 - x) >= epsilon:
-        if guess**2 < x: 
-            low = guess
-        else: 
-            high = guess
-        guess = (high + low)/2.0
-        num_guesses += 1
-    print('num_guesses =', num_guesses)
-    return guess
-
-print(bisection_root_new(123))
-print(bisection_root_new(123, 0.5))
-print(bisection_root_new(123, epsilon=0.00001))
-print(bisection_root_new(epsilon=0.001, x=123)) 
-
-#################
-print(f"EXAMPLE: function returning a function")
-#################
-def make_prod(a):
-    def g(b):
-        return a*b
-    return g
-
-# # call it this way 1
-# val = make_prod(4)(3)
-# print(val)
+# Raising our own more informative error
+# This is typically what you'd be asked to do in this class
+def sum_digits_raise(s):
+    """ s is a non-empty string containing digits
+    Returns sum of all characters that are digits """
+    total = 0
+    for char in s:
+        try:
+            val = int(char)
+            total += val
+        except:
+            raise ValueError("string contained a character") 
+    return total
+            
+# print(sum_digits_raise("123"))
+# print(sum_digits_raise("123abc"))
 
 
-# # call it this way 2
-# doubler = make_prod(2)
-# val = doubler(3)
-# print(val)
+# Note the assert statement activates when s is passed as ""
+def sum_digits_assert(s):
+    """ s is a non-empty string containing digits
+    Returns sum of all characters that are digits """
+    assert len(s) != 0, "s is empty"
+    total = 0
+    for char in s:
+        try:
+            val = int(char)
+            total += val
+        except:
+            raise ValueError("string contained a character") 
+    return total
+
+# print(sum_digits_assert(""))
+# print(sum_digits_assert("123"))
+# print(sum_digits_assert("123abc"))
+
+######################################
+# EXAMPLE: Exceptions with user input
+######################################
+
+def divide_nums1():
+    a = int(input("Tell me one number: "))
+    b = int(input("Tell me another number: "))
+    print(a/b)
+
+# divide_nums1()
+
+
+def divide_nums2():
+    try:
+        a = int(input("Tell me one number: "))
+        b = int(input("Tell me another number: "))
+        print(a/b)
+    except:
+        print("Bug in user input")
+
+# divide_nums2()
+
+
+def divide_nums3():
+    try:
+        a = int(input("Tell me one number: "))
+        b = int(input("Tell me another number: "))
+        print("a/b = ", a/b)
+        print("a+b = ", a+b)
+    except ValueError:
+        print("Could not convert to a number.")
+    except ZeroDivisionError:
+        print("Can't divide by zero")
+        print("a/b = infinity")
+        print("a+b =", a+b)
+    except:
+        print("Something went very wrong.")
+
+# divide_nums3()
+
+
+
+#########################################
+########### YOU TRY IT ##################
+##########################################
+def pairwise_div(Lnum, Ldenom):
+    """ Lnum and Ldenom are non-empty lists of 
+        equal lengths containing numbers
+
+    Returns a new list whose elements are the pairwise 
+    division of an element in Lnum by an element in Ldenom. 
+
+    Raise a ValueError if Ldenom contains 0. """
+    # your code here
+    # challenge: write this with list comprehension!
+
+    
+# For example:
+L1 = [4,5,6]
+L2 = [1,2,3]    
+# print(pairwise_div(L1, L2))  # prints [4.0,2.5,2.0]
+
+L1 = [4,5,6]
+L2 = [1,0,3]    
+# print(pairwise_div(L1, L2))  # raises a ValueError
+
+## to run after introducing assertions
+L1 = [4,5,6,7,8]
+L2 = [1,8,3]    
+# print(pairwise_div(L1, L2))  # raises an AssertionError
+
+L1 = []
+L2 = []    
+# print(pairwise_div(L1, L2))  # raises an AssertionError
+
+
+#########################################
 
 
 #######################################
-print(f"STEPS TO DEBUG THE FOLLOWING BUGGY CODE") ########
+## EXAMPLE: Longer exceptions and lists example
 #######################################
-## STEP 1: run it with test cases
-def is_pal(x):
-    """ Returns True is list x is a palindrome and False otherwise """
-    temp = x # what if temp changed and its changed x too
-    print(x) # 
-    temp.reverse 
-    if temp == x:
-        return True
+def get_stats(class_list, avg_func):
+    """ class_list is a list of student info: 
+            * name as a list
+            * grades as a list
+        avg_func is a function that takes in a list and returns a float
+    """
+    new_stats = []
+    for person in class_list:
+        new_stats.append([person[0], person[1], avg_func(person[1])])
+    return new_stats 
+
+test_grades = [[['peter', 'parker'], [10.0, 55.0, 85.0]], 
+               [['bruce', 'wayne'], [10.0, 80.0, 75.0]],
+               [['captain', 'america'], [80.0,10.0,96.0]],
+               [['thor'], []]]
+
+## Note in the get_stats function calls below, 
+## we are passing the various avg1/2/3 function names as params
+## to test different avg function behaviours with the same data
+
+# avg function: version without an exception
+def avg1(grades):
+    return (sum(grades))/len(grades)
+# print(get_stats(test_grades, avg1))
+    
+
+# avg function: version with an exception
+def avg2(grades):
+    try:
+        return sum(grades)/len(grades)
+    except ZeroDivisionError:
+        print('warning: no grades data')
+# print(get_stats(test_grades, avg2))
+
+
+# avg function: version with an exception
+def avg3(grades):
+    try:
+        return sum(grades)/len(grades)
+    except ZeroDivisionError:
+        print('warning: no grades data')
+        return 0.0
+# print(get_stats(test_grades, avg3))
+
+
+# avg function: version with assert
+def avg4(grades):
+    assert len(grades) != 0, 'warning: no grades data'
+    return sum(grades)/len(grades)
+# print(get_stats(test_grades, avg4))
+
+
+#########################################
+########### ANSWERS TO YOU TRY IT ##################
+##########################################
+def pairwise_div(Lnum, Ldenom):
+    """ Lnum and Ldenom are non-empty lists of 
+        equal lengths containing numbers
+
+    Returns a new list whose elements are the pairwise 
+    division of an element in Lnum by an element in Ldenom. 
+
+    Raise a ValueError if Ldenom contains 0. """
+    assert (len(Lnum) == len(Ldenom)), 'lists not equal length'
+    assert Lnum != [], 'list is empty'
+    if 0 in L2:
+        raise ValueError
     else:
-        return False
+        L = []
+        for i in range(len(Lnum)):
+            L.append(Lnum[i]/Ldenom[i])
+        return L
+    ## with list comprehensions
+    ## return [Lnum[i]/Ldenom[i] for i in range(len(Lnum))]
 
-# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
-# print(is_pal(list('ab')))     # input is ['a','b']
+    
+# For example:
+L1 = [4,5,6]
+L2 = [1,2,3]    
+# print(pairwise_div(L1, L2))  # prints [4.0,2.5,2.0]
 
-## STEP 2: add print statements about halfway through       
-def is_pal(x):
-    """ Returns True is list x is a palindrome and False otherwise """
-    temp = x
-    temp.reverse
-    print(temp, x)  # add this
-    if temp == x:
-        return True
-    else:
-        return False
+L1 = [4,5,6]
+L2 = [1,0,3]    
+# print(pairwise_div(L1, L2))  # raises a ValueError
 
-# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
-# print(is_pal(list('ab')))     # input is ['a','b']
- 
-## STEP 3: Add more print statements before and after critical points
-def is_pal(x):
-    """ Returns True is list x is a palindrome and False otherwise """
-    temp = x
-    print('before reverse', temp, x)  # add this
-    temp.reverse
-    print('after reverse', temp, x)  # add this
-    if temp == x:
-        return True
-    else:
-        return False
- 
-# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
-# print(is_pal(list('ab')))     # input is ['a','b']
-
-## STEP 4: Fix one issue, notice something is still wrong
-def is_pal(x):
-    """ Returns True is list x is a palindrome and False otherwise """
-    temp = x
-    print('before reverse', temp, x)
-    temp.reverse()                      # fix this
-    print('after reverse', temp, x)
-    if temp == x:
-        return True
-    else:
-        return False
-
-# print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
-print(is_pal(list('ab')))     # input is ['a','b']
-
-## STEP 5: Recall with lists, aliasing/mutability is an issue
-def is_pal(x):
-    """ Returns True is list x is a palindrome and False otherwise """
-    temp = x[:]     # fix this
-    print('before reverse', temp, x)
-    temp.reverse()
-    print('after reverse', temp, x)
-    if temp == x:
-        return True
-    else:
-        return False
-
-print(is_pal(list('abcba')))  # input is ['a','b','c','b','a']
-print(is_pal(list('ab')))     # input is ['a','b']
+##############################################
+################### AT HOME ###################
+################################################
+def pairwise_div(Lnum, Ldenom):
+    """ Lnum and Ldenom are non-empty lists of equal lengths
+        containing numbers
+    Returns a new list whose elements are the pairwise 
+    division of an element in Lnum by an element in Ldenom. 
+    Raise a ValueError if L2 contains 0 or if the code can't 
+    perform the division for some reason. """
+    # your code here
 
 
-print(f"########## YOU TRY IT AT HOME #############")
-## Write a list comprehension expression that uses a list named L.
-# It makes a new list whose elements are the middle 
-# character of strings whose length is 3. 
-
-# If L = ['abc', 'm', 'p', 'xyz', '123', 57]
-# It makes ['b', 'y', '2']
-L = ['abc', 'm', 'p', 'xyz', '123', 57]
-# if len // 2 = 1
-# iterate through all the elements in the list and  only retrn the middle one
-remove_int_len = [x for x in L if len(str(x)) > 2]
-new_list = [x[len(x)//2] for x in remove_int_len if len(remove_int_len) % 2 != 0]
-print(new_list)
-## There is a file lec12_wordle.py that is buggy!
-## Try to fix the code to play the game correctly
-###################################
-
-
-########## ANSWERS TO YOU TRY IT AT HOME #############
-## Write a list comprehension expression that uses a list named L.
-# It makes a new list whose elements are the middle 
-# character of strings whose length is 3. 
-print(f"Answer##########################")
-# If L = ['abc', 'm', 'p', 'xyz', '123']
-# It makes ['b', 'y', '2']
-L = ['abc', 'm', 'p', 'xyz', '123', 57]
-print([e[1] for e in L if isinstance(e, str) and len(e) == 3])
-###################################
-
-
-
-
+##############################################
+################### ANSWERS TO AT HOME ###################
+################################################
+def pairwise_div(Lnum, Ldenom):
+    """ Lnum and Ldenom are non-empty lists of equal lengths
+        containing numbers
+    Returns a new list whose elements are the pairwise 
+    division of an element in Lnum by an element in Ldenom. 
+    Raise a ValueError if L2 contains 0 or if the code can't 
+    perform the division for some reason. """
+    assert (len(Lnum) == len(Ldenom)) and (len(Ldenom) != 0)
+    L = []
+    for i in range(len(Lnum)):
+        try:
+            L.append(Lnum[i]/Ldenom[i])
+        except:
+            raise ValueError
+    return L
