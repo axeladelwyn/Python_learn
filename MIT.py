@@ -108,6 +108,8 @@ def divide_nums3():
         print("a+b =", a+b)
     except:
         print("Something went very wrong.")
+    else:
+        print("sucess")
 
 # divide_nums3()
 
@@ -126,12 +128,27 @@ def pairwise_div(Lnum, Ldenom):
     Raise a ValueError if Ldenom contains 0. """
     # your code here
     # challenge: write this with list comprehension!
+    if 0 in Ldenom:
+        raise ValueError("Ldenom contains 0,  cannot divide by zero")
+    # There is 2 variable, num and demon and divide num / denom 
+    # In two list given [Lnum<]
+    assert len(Lnum) == len(Ldenom), 'lengths diff'
+    assert len(Lnum)!=0 and len(Ldenom)!= 0, 'empty list'
+    
+    L = []
+    # L = [Lnum[i]/Ldenom[i] for i in range(len(Lnum))]
+    for i in range(len(Lnum)):
+        try:
+            L.append(Lnum[i]/Ldenom[i])
+        except:
+            raise ValueError('some problem message')
+    return L
 
     
 # For example:
 L1 = [4,5,6]
 L2 = [1,2,3]    
-# print(pairwise_div(L1, L2))  # prints [4.0,2.5,2.0]
+print(pairwise_div(L1, L2))  # prints [4.0,2.5,2.0]
 
 L1 = [4,5,6]
 L2 = [1,0,3]    
@@ -167,7 +184,7 @@ def get_stats(class_list, avg_func):
 test_grades = [[['peter', 'parker'], [10.0, 55.0, 85.0]], 
                [['bruce', 'wayne'], [10.0, 80.0, 75.0]],
                [['captain', 'america'], [80.0,10.0,96.0]],
-               [['thor'], []]]
+               [['deadpool'], [], None]]
 
 ## Note in the get_stats function calls below, 
 ## we are passing the various avg1/2/3 function names as params
@@ -249,8 +266,19 @@ def pairwise_div(Lnum, Ldenom):
     Raise a ValueError if L2 contains 0 or if the code can't 
     perform the division for some reason. """
     # your code here
+    # using list comprehension
+    assert (len(Lnum) == len(Ldenom)) and (len(Ldenom) != 0)
+    L = []
+    try:
+        L = [Lnum[i]/Ldenom[i] for i in range(len(Lnum))]
+    except:
+        raise ValueError
 
+    return L
+L1 = [4,5,6]
+L2 = [1,2,3,5] 
 
+print(pairwise_div(L1, L2))  # raises a ValueError
 ##############################################
 ################### ANSWERS TO AT HOME ###################
 ################################################
