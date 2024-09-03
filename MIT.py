@@ -94,12 +94,9 @@ def find_grades(grades, students):
     # your code here
     result = []
     for key in students:
-        print(key)
-        if key in grades:
-            result.append(grades[key])
-        else:
-            raise ValueError (f"{students} does not have a grade in the grades dictionary")
-            print(e)
+    # key is 'matt' 'Katty'     
+        grade = grades[key]
+        result.append(grade)
     return result
 
 
@@ -116,24 +113,39 @@ def find_in_L(Ld, k):
         k is an int
     Returns True if k is a key in any dicts of L and False otherwise """
     # your code here
+    for d in Ld:
+        print(list(d))
+        if k in list(d):
+            return True
+    return False        
 
   
 d1 = {1:2, 3:4, 5:6}
 d2 = {2:4, 4:6}
 d3 = {1:1, 3:9, 4:16, 5:25}
 
-# print(find_in_L([d1, d2, d3], 2))  # returns True
-# print(find_in_L([d1, d2, d3], 25))  # returns False
+print(find_in_L([d1, d2, d3], 2))  # returns True
+print(find_in_L([d1, d2, d3], 25))  # returns False
 
 ########################################################
 
-
+print(f"##################################################")
 ########################### YOU TRY IT ######################
 def count_matches(d):
     """ d is a dict
     Returns how many entries in d have the key equal to its value """
     # your code here
-
+    # if  keys() match with values()
+    # iterate through the dictionary
+    counter = 0
+    for k,v in d.items():
+        print(k,v)
+        if k == v:
+            counter +=  1
+    return counter
+    for x in d.keys():
+        if d[x] == x:
+            count += 1
 
 d = {1:2, 3:4, 5:6}
 # print(count_matches(d))   # prints 0
@@ -154,7 +166,8 @@ def get_average(data, what):
         Returns the average of all elements in data that match 'what' """
     all_data = []
     for stud in data.keys():
-        pass
+        print(stud)
+        all_data += data[stud][what]
         # Which one of the below is correct? 
         # A) all_data = all_data + data[stud][what]
         # B) all_data.append(data[stud][what]) 
@@ -163,12 +176,12 @@ def get_average(data, what):
 
     return sum(all_data)/len(all_data)
 
-# print(get_average(my_d, 'mq') )   # prints 7.0
+print(get_average(my_d, 'mq') )   # prints 7.0
 
 ###########################################################
 
 #######################################
-## COMPLEX EXAMPLE: frequency dictionary of song lyrics
+print(f"## COMPLEX EXAMPLE: frequency dictionary of song lyrics")
 #######################################
 song = "RAH RAH AH AH AH ROM MAH RO MAH MAH"
 
@@ -193,8 +206,8 @@ def generate_word_dict(song):
     return word_dict
 
 word_dict = generate_word_dict(song)
-# print(word_dict)
-     
+print(word_dict)
+
 def find_frequent_word(word_dict):
     """ word_dict is a frequency dict mapping string:int
     Using word_dict, returns a tuple of 
@@ -213,7 +226,7 @@ def find_frequent_word(word_dict):
     return (words, highest)
     
 most_freq = find_frequent_word(word_dict)
-# print(most_freq)
+print(most_freq)
 
 
 def occurs_often(word_dict, x):
@@ -236,9 +249,10 @@ def occurs_often(word_dict, x):
         # so that you are left with next most frequent words
         for word in word_freq_tuple[0]:
             del(word_dict[word])
+    # print(word_freq_tuple)
     return freq_list
 
-# print(occurs_often(word_dict, 2))
+print(occurs_often(word_dict, 2))
 
 # pick a song by uncommenting your favorite
 #song = "I threw a wish in the well Dont ask me Ill never tell I looked to you as it fell And now youre in my way  Id trade my soul for a wish Pennies and dimes for a kiss I wasnt looking for this But now youre in my way  Your stare was holdin Ripped jeans skin was showin Hot night wind was blowin Where do you think youre going baby  Hey I just met you And this is crazy But heres my number So call me maybe  Its hard to look right At you baby But heres my number So call me maybe  Hey I just met you And this is crazy But heres my number So call me maybe  And all the other boys Try to chase me But heres my number So call me maybe  You took your time with the call I took no time with the fall You gave me nothing at all But still youre in my way  I beg and borrow and steal Have foresight and its real I didnt know I would feel it But its in my way  Your stare was holdin Ripped jeans skin was showin Hot night wind was blowin Where you think youre going baby  Hey I just met you And this is crazy But heres my number So call me maybe  Its hard to look right At you baby But heres my number So call me maybe  Hey I just met you And this is crazy But heres my number So call me maybe  And all the other boys Try to chase me But heres my number So call me maybe  Before you came into my life I missed you so bad I missed you so bad I missed you so so bad  Before you came into my life I missed you so bad And you should know that I missed you so so bad bad bad  Its hard to look right At you baby But heres my number So call me maybe  Hey I just met you And this is crazy But heres my number So call me maybe  And all the other boys Try to chase me But heres my number So call me maybe  Before you came into my life I missed you so bad I missed you so bad I missed you so so bad  Before you came into my life I missed you so bad And you should know that  So call me maybe"
@@ -318,27 +332,37 @@ def count_matches(d):
 ######################################################
 ############## AT HOME ###################
 ######################################################
-
+print(f"################ATHOME################")
 def is_inverse(d1, d2):
     """ d1 and d2 are dicts 
     Assume values of d1 and d2 are unique and immutable
     Returns True if d1's keys are values in d2 and d1's 
     values are keys in d2 """
-    pass
+    # both of d1 and d2 is unique and immutable
+    if len(d1) != len(d2):
+        return False
+    
+    for key,value in d1.items():
+        if value not in d2 or d2[value] != key:
+            return False
 
-# d1 = {1:2, 3:4}
-# d2 = {2:1, 4:3}
-# print(is_inverse(d1, d2))  # prints True
+    return True
 
-# d1 = {1:2, 3:4}
-# d2 = {2:1, 4:3, 5:6}
-# print(is_inverse(d1, d2))  # prints False
+
+    
+d1 = {1:2, 3:4}
+d2 = {2:1, 4:3}
+print(is_inverse(d1, d2))  # prints True
+
+d1 = {1:2, 3:4}
+d2 = {2:1, 4:3, 5:6}
+print(is_inverse(d1, d2))  # prints False
  
-# d1 = {1:2, 3:4}
-# d2 = {1:2, 2:1}
-# print(is_inverse(d1, d2))  # prints False
+d1 = {1:2, 3:4}
+d2 = {1:2, 2:1}
+print(is_inverse(d1, d2))  # prints False
 
-
+print(f"###############################################")
 def add_to_d(d, L):
     """ d is a dict
         L is a list of tuples
@@ -346,20 +370,28 @@ def add_to_d(d, L):
     tuple in L and the associated value is the second element of a 
     tuple in L. If the key is already in d, do nothing to its value. 
     If the key cannot be added, raise a ValueError. Returns None. """
-    pass
-    
-# d = {}
-# L = [(1,2), (3,4)]
-# add_to_d(d, L)
-# print(d)   # d is mutated to be {1: 2, 3: 4}
+    for element in L:
+        key, value = element
+        print(key, value)
+        print(element)
+        if not isinstance(key, (int, float, str, tuple)):
+            raise ValueError(f"Key {key} is not immutableand cannot be added to the dictionary.")
+        if key not in d:
+            d[key] = value
+        
+    return None
+d = {}
+L = [(1,2), (3,4)]
+add_to_d(d, L)
+print(d)   # d is mutated to be {1: 2, 3: 4}
 
-# d = {1:1}
-# L = [(1,2), (3,4)]
-# add_to_d(d, L)
-# print(d)   # d is mutated to be {1: 1, 3: 4}
+d = {1:1}
+L = [(1,2), (3,4)]
+add_to_d(d, L)
+print(d)   # d is mutated to be {1: 1, 3: 4}
 
-# d = {1:1}
-# L = [(3,4), ([1,2,3], 5)]
+d = {1:1}
+L = [(3,4), ([1,2,3], 5)]
 # add_to_d(d, L)   
 # # raises a ValueError because its trying to add a list (mutable obj) as key
 
