@@ -8,7 +8,6 @@ def mult(a, b):
 
 # print(mult(5,4))
 
-
 ####################################
 
 ## a*b using a while loop
@@ -20,8 +19,6 @@ def mult_iter(a, b):
     return result
 
 # print(mult_iter(5,4))
-
-
 
 def factorial_recurcive(n):
     if n == 0:
@@ -102,39 +99,48 @@ def power_recur(n, p):
 
 # print(power_recur(2,3))   # prints 8
 
-
+print(f"##################### AT HOEM ###################")
 #######################################################
 ################ AT HOME ##############################
 #######################################################
 # Q1. Rewrite this to calculate b+b+b... a times
 def mult(a, b):
     # your code here
-    pass
-    
-# print(mult(5,4))
+    b = 0
+    for i in range(a-1):
+        b += 5
+    return b
+print(mult(5,4))
 
 # Q2. If we evaluate mult_recur(3,4), how many times is the 
 # procedure mult_recur called (including initial call)?
 # Hint: add a print inside the function!
-
+print(f"BABUGA@@@@@@@@@@@@@@")
 def mult_recur(a,b):
+    print(b)
     if b == 0:
         return 0
     else:
         return a + mult_recur(a,b-1)
+    
 
-# mult_recur(3,4)
+print(mult_recur(3,4))
 
-
+print(f"####################")
 # Q3. Calculate a+b recursively. Assume the only math operation
 # you are allowed to do are adding and subtracting 1
 def add(a, b):
     """ Uses recursion to calculate a+b as adding
     a to 1, b times. """
     # your code here
-    
-# print(add(3,4))   # prints 7
-
+    if b == 0:
+        return a
+    else:
+        return 1 + add(a,b-1)
+print(add(3,4)) # prints 7
+print(add(5,4))
+print(add(3,27)) 
+print(f"##################################")
 
 # Q4. Calculate a+b recursively by 1's. Assume the only math operation
 # you are allowed to do are adding and subtracting 1
@@ -142,8 +148,15 @@ def add_by_ones(a, b):
     """ Uses recursion to calculate a+b as adding
     1, a times then adding 1, b times. """
     # your code here
-
-# print(add_by_ones(3,4))   # prints 7
+    if a == 0:
+        if b == 0:
+            return 0
+        else:
+            return 1 + add_by_ones(a,b-1)
+    else:
+        return 1 + add_by_ones(a-1,b)
+# calling a new frame to increment result by 1 
+print(add_by_ones(3,0))   # prints 7
 
 
 
