@@ -8,7 +8,20 @@ def recur_power(base, exp):
     case you return base * base^(exp-1).
     """
     # Your code here  
-    return None
+    if exp == 0:
+        return 1
+    else:
+        return base * recur_power(base,exp-1)
+
 
 # Examples:
 print(recur_power(2,5))  # prints 32
+
+
+def harmonic_int(n):
+    if n == 1:
+        return 1
+    else:
+        return 1 / n + harmonic_int(n - 1)
+
+print(harmonic_int(1))
