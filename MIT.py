@@ -407,20 +407,49 @@ class Fraction(object):
 
 
 ###########################################################
-############### AT HOME ####################
+print(f"############### AT HOME ####################")
 ###########################################################
 #Question 1.
 # Add a method to the Circle class that allows you to print a Circle object
 # (you decide how to best represent it!)
 class Circle(object):
-    def __init__(self, radius):
+    def __init__(self, center, radius):
         self.radius = radius
+        self.center = center
+    def is_inside(self, point):
+        return point.distance(self.center) < self.radius
 
+    def __str__(self):
+        return "circle: "+str(self.center)+", "+str(self.radius)
 
+center = Coordinate(3,2)
+print(center)
+my_circle = Circle(center, 5)
+print(my_circle)
+point = Coordinate(5,5)
+print(my_circle.is_inside(point))
 #Question 2.
 # Implement a method in Fraction class such that the operator ** works
 #print(a**b) # works after you define it on two Fraction objects
-
+class Fract(object):
+    # we define __init__ dunder method
+    def __init__(self, numerator, denominator):
+        self.num = numerator
+        self.denom = denominator
+    # initialize dunder power method 
+    def __float__(self):
+        return self.num/self.denom
+    def __str__(self):
+        return (f"{self.num} / {self.denom}")
+    def __pow__(self, other):
+        return (f"{float(self)**float(other)}")
+f1 = Fract(3,4)
+f2 = Fract(5,4)
+print(f1**f2)
+print(f1)
+f1 = Fract(4,1)
+f2 = Fract(1,2)
+print(f1**f2)    # prints 2.0
 
 ###########################################################
 ############# ANSWERS TO AT HOME ###################
