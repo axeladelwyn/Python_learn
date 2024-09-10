@@ -49,14 +49,14 @@ def get_story_string():
     """
     Returns: a story in encrypted text.
     """
-    f = open("story.txt", "r")
+    f = open("PS/story.txt", "r")
     story = str(f.read())
     f.close()
     return story[:-1]
 
 
 def get_story_pads():
-    with open('pads.txt') as json_file:
+    with open('PS/pads.txt') as json_file:
         return json.load(json_file)
 
 

@@ -1,491 +1,638 @@
-## EXAMPLE: simple Coordinate class
-class Coordinate(object):
-    """ A coordinate made up of an x and y value """
-    def __init__(self, x, y):
-        """ Sets the x and y values """
-        self.x = x
-        self.y = y
-    def distance(self, other):
-        """ Returns the euclidean distance between two Coordinate objects """
-        x_diff_sq = (self.x-other.x)**2
-        y_diff_sq = (self.y-other.y)**2
-        return (x_diff_sq + y_diff_sq)**0.5
-    def to_origin(self):
-        """ always sets self.x and self.y to 0,0 """
-        self.x = 0
-        self.y = 0
+import random
+
+#################################
+## Animal abstract data type 
+#################################
+class Animal(object):
+    def __init__(self, age): # The parameters stays 1 but the attribute can be added? # can be just set __init__ with a infinite amount of parameter 
+        # to make the code more simplers?
+        self.age = age
+        self.name = None
+        self.color = None
+        # you can set basically infinite attribute to a class 
+        # such as type, genes, order, genus , classification etc..
     def __str__(self):
-        """ Returns a string representation of self """
-        return "<" + str(self.x) + "," + str(self.y) + ">"
-
-
-# #Print a coordinate object's data attributes
-c = Coordinate(3,4)
-origin = Coordinate(0,0)
-# print(f"c's x is {c.x} and origin's x is {origin.x}")
-
-# #These are equivalent calls
-# print(c.distance(origin))
-# print(Coordinate.distance(c, origin))
-# #Calling a new method
-
-# c.to_origin()
-# print(c.x, c.y)
-
-# #Printing a coordinate object
-
-# print(c)
-# print(origin)
-# c+origin
-
-
-############## YOU TRY IT #######################
-# Add code to the init method to check that 
-# * the type of center is a Coordinate obj and 
-# * the type of radius is an int. 
-# If either are not these types, raise a ValueError.
-class Circle(object):
-    def __init__(self, center, radius):
-        if not isinstance(center,Coordinate):
-            raise ValueError("The parameters is not correct!")
-        if not isinstance(radius,int):
-            raise ValueError("The paremeters is not correct!")
-        self.center = center
-        self.radius = radius
-        
-center = Coordinate(2,2)
-my_circle = Circle(center, 2)
-# center = Coordinate(2, 2)
-# my_circle = Circle(center, 2)   # no error
-
-# my_circle = Circle(2, 2)    # raises ValueError
-# my_circle = Circle(center, 'two')  # raises ValueError
-
-##################################################
-
-## EXAMPLE: use Coordinate objects to build Circle objects
-class Circle(object):
-    def __init__(self, center, radius):
-        self.center = center
-        self.radius = radius
-    def is_inside(self, point):
-        """ Returns True if point is inside self and False otherwise """
-        return point.distance(self.center) < self.radius
-    
-center = Coordinate(2, 2)
-my_circle = Circle(center, 2)
-
-p = Coordinate(1,1)
-# print(my_circle.is_inside(p))
-
-# p = Coordinate(10,10)
-# print(my_circle.is_inside(p))
-
-
-
-## EXAMPLE: simple class to represent fractions
-class SimpleFraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def times(self, other):
-        """ Returns a float representing the addition """
-        top = self.num*other.num
-        bottom = self.denom*other.denom
-        return top/bottom
-    def divide(self, other):
-        """ Returns a float representing the subtraction """
-        top = self.num*other.denom
-        bottom = self.denom*other.num
-        return top/bottom
-    def plus(self, other):
-        """ Returns a float representing the addition """
-        top = self.num*other.denom + self.denom*other.num
-        bottom = self.denom*other.denom
-        return top/bottom
-    def minus(self, other):
-        """ Returns a float representing the subtraction """
-        top = self.num*other.denom - self.denom*other.num
-        bottom = self.denom*other.denom
-        return top/bottom
-
-
-f1 = SimpleFraction(3, 4)
-f2 = SimpleFraction(1, 4)
-# print(f1.num)
-# print(f1.denom)
-# print(f2.num)
-# print(f2.denom)
-# print(f1.times(f2))
-
-# print(f1.plus(f2))
-# print(f1.divide(f2))
-# print(f1.minus(f2))
-
-# print(f1)
-# print(f1.times(f2))
-# print(f1 * f2)  # given an error
-
-
-########### YOU TRY IT ##################
-# Implement the missing get_inverse and invert methods below
-class SimpleFraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def get_inverse(self):
-        """ Returns a float representing 1/self """
-        # your code here
-        return self.denom / self.num
-    def invert(self):
-        """ Sets self's numerator to its denominator and vice versa.
-            Returns None. """
-        # your code here
-        self.num, self.denom = self.denom, self.num
-        
-# f1 = SimpleFraction(3,4)
-# print(f1.num, f1.denom)   # prints 3 4 
-# print(f1.get_inverse())   # prints 1.33333333 (no?te this one returns value)
-# f1.invert()               # acts on data attributes internally, no return
-# print(f1.num, f1.denom)   # prints 4 3 
-
-
-#########################################
-
-
-## EXAMPLE: simple class to represent fractions
-## Added functionality by implementing +, -, *, / operators
-class Fraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def __str__(self):
-        """ Returns a string representation of self """
-        return str(self.num) + "/" + str(self.denom)
-    def __mul__(self, other):
-        """ Returns a new fraction representing the addition """
-        top = self.num*other.num
-        bottom = self.denom*other.denom
-        return Fraction(top, bottom)
-    def __add__(self, other):
-        """ Returns a new fraction representing the addition """
-        top = self.num*other.denom + self.denom*other.num
-        bottom = self.denom*other.denom
-        return Fraction(top, bottom)
-    def __sub__(self, other):
-        """ Returns a new fraction representing the subtraction """
-        top = self.num*other.denom - self.denom*other.num
-        bottom = self.denom*other.denom
-        return Fraction(top, bottom)
-    def __truediv__(self, other):
-        """ Returns a new fraction representing the subtraction """
-        top = self.num*other.denom
-        bottom = self.denom*other.num
-        return Fraction(top, bottom)
-    def __float__(self):
-        """ Returns a float value of the fraction """
-        return self.num/self.denom
-    def reduce(self):
-        """ Returns a new fraction the reduced version of self 
-            using the greatest common divisor """
-        def gcd(n, d):
-            while d != 0:
-                (d, n) = (n%d, d)
-            return n
-        if self.denom == 0:
-            return None
-        elif self.denom == 1:
-            return self.num
-        else:
-            greatest_common_divisor = gcd(self.num,self.denom)
-            top = int(self.num/greatest_common_divisor)
-            bottom = int(self.denom/greatest_common_divisor)
-            return Fraction(top, bottom)
-    def invert(self):
-        """ Returns a new fraction representing 1/self """
-        return Fraction(self.denom, self.num)
-
-# # Using shorthand operations on fractions        
-# a = Fraction(1,4)
-# b = Fraction(3,4)
-# d = Fraction(5,4)
-# print(a)
-# print(d)
-# c = a * b # c is a Fraction object
-# print(c)
-# # The next 3 lines are equivalent
-# print(a * b)                  ##1 (shorthand) same as #2, #3
-# print(a.__mul__(b))           ##2 (method call) same as #1, #3
-# print(Fraction.__mul__(a, b)) ##3 (explicit class call) same as #1, #2
-# ########
-
-# # The next 3 lines are equivalent
-# print(float(c))              ##1 (shorthand) same as #2, #3
-# print(c.__float__())         ##2 (method call) same as #1, #3
-# print(Fraction.__float__(c)) ##3 (explicit class call) same as #1, #2
-
-# # Reducing fractions
-a = Fraction(1,4)
-b = Fraction(2,3)
-c = a * b 
+        return "animal name:"+str(self.name)+" age: "+str(self.age)+" Color: "+str(self.color)
+    def get_age(self):           ################
+        return self.age          ##############
+    def get_name(self):         ############## GETTERS
+        return self.name        ################
+    def get_color(self):
+        return self.color
+    def set_age(self, newage): ######################
+        self.age = newage       #####################
+    def set_name(self, newname=""): ############## SETTERS
+        self.name = newname         ################
+    def set_skin_color(self, color= ""):
+        self.color = color
+b = Animal(5)
+new_name = b.set_name("baristook")
+new_age = b.set_age(30)
+c = b.get_name()
+d = b.get_age()
+print(b)
 print(c)
-print(c.reduce())
+print(d)
 
-# # Can't multiply int and Fraction
-# a = Fraction(4,1)
-# b = Fraction(3,9)
-# ar = a.reduce()
-# br = b.reduce()
-# print(ar, type(ar))
-# print(br, type(br))
-# # c = ar * br   # gives an error bc it's multiplying an int with a Fraction
+my_dog = Animal(10)
+my_dog.set_name("Doggy")
+my_dog.set_age(25)
+my_dog.set_skin_color("blue yellowish red")
+dog_age = my_dog.get_age()
+print(my_dog)
+print(dog_age)
+# #default parameters with methods        
+a = Animal(4)
+# print(a)
+b = Animal(6)
+# print(b)
+# print(a.age)
+# print(a.get_age())
 
+# a.set_name("fluffy")
+# print(a.name)
+# print(a.get_name())
+# print(a)
+# a.set_name()
+# print(a)
 
-print(f"############## YOU TRY IT #####################")
-# Modify the str method to represent the Fraction as just the 
-# numerator, when the denominator is 1. Otherwise its representation 
-# is the numerator then a / then the denominator, as before
-class Fraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def __str__(self):
-        """ Returns a string representation of self """
-        # modify this
-        if self.denom == 1:
-            return str(self.num)
-        else:
-            return str(self.num) + "/" + str(self.denom)
-        
+# #Accessing data attributes and adding new attributes (just for one instance)
+# #These are bad to do, use getter and setter methods instead!
+# a = Animal(4)
+# a.name = "furball"
+# a.age = "twelve"
+# a.size = "tiny"
+# print(a.get_age())
 
- 
-a = Fraction(1,4)
-b = Fraction(3,1)
-print(a)     # prints 1/4
-print(b)     # prints 3
+print(f"########################")
+### EXAMPLE: using Animal objects in code
+def animal_dict(L):
+    """ L is a list
+    Returns a dict, d, mappping an int to an Animal object. 
+    A key in d is all non-negative ints, n, in L. A value 
+    corresponding to a key is an Animal object with n as its age. """
+    d = {}
+    for n in L:
+        # if type of an L iteration which is n is integer and n is greater or equal to 0
+        # which means it cannot be negative in order to pass
+        # set the dictionary to a animal class?
+        if type(n) == int and n >= 0:
+            # what does this line do?
+            d[n] = Animal(n) #change this ? This is assignin key value pair in dictionary d {}
+    return d # this return a dictionary
+
+L = [2,5,'a',-5,0]
+animals = animal_dict(L) # or this?
+dog_animals = animal_dict(L)
+print(dog_animals) # why it prints the memory location?
+# 3 number get picked from L which is 2, 5, 0 
+# how do i display the animal age
+for key, value in dog_animals.items():
+    print(f"Age: {key} , Animal class: {value}")
+
+# print(animals)
+# above prints {2: <__main__.Animal object at 0x00000199AFF350A0>, this is a dictionary
+#               5: <__main__.Animal object at 0x00000199AFF35A30>, this is a dictionary
+#               0: <__main__.Animal object at 0x00000199AFF35D00>} this is a dictionary
+
+for n,a in animals.items():   
+    print(f'key {n} with val {a}')
+# loop above prints animal:None:2 
+#                   animal:None:5 
+#                   animal:None:0
+print(f"################")
+###################### YOU TRY IT ####################
+# Write a function that smeets this spec.
+def make_animals(L1, L2, L3):
+    """ L1 is a list if ints and L2 is a list of str
+        L1 and L2 have the same length
+    Creates a list of Animals the same length as L1 and L2.
+    An animal object at index i has the age and name
+    corresponding to the same index in L1 and L2, respectively. """
+    # your code here
+    #L1 is list of ints
+    #L2 is list of string
+    # put it together
+    # create a list of animals 
+    # index i is age and name
+    # L1 for age and L2 for name(string)
+    combind_list = [] # this is the combined list
+    for i in range(len(L1)):
+        age = L1[i]
+        name = L2[i]
+        color = L3[i]
+        a = Animal(age)
+        a.set_name(name)
+        a.set_skin_color(color)
+        combind_list.append(a)
+        # put a square bracket inside it``
+        # append iteration and string of L2
+        # add a list in list pair such as [[2,blobflish],[5,crazyant],...]
+        # how to do that??
+        # It added three element
+    return combind_list
+L1 = [2,5,1]
+L2 = ["blobfish", "crazyant", "parafox"]
+L3 = ["red", "blue", "green"]
+animals = make_animals(L1, L2, L3)
+print(animals)
+for i in animals:
+    print(i)
+# animals = make_animals(L1, L2)
+# print(animals)     # note this prints a list of animal objects
+# for i in animals:  # this prints the indivdual animals
+#     print(i)
 
 #######################################################
-print(f"###########################")
-################ YOU TRY IT ############################
-# Modify the code to return a Fraction object when denominator is 1
-class Fraction(object):
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def reduce(self):
-        def gcd(n, d):
-            while d != 0:
-                (d, n) = (n%d, d)
-            return n
-        if self.denom == 0:
-            return None
-        elif self.denom == 1:
-            # modify this
-            return Fraction(self.num,1)
+
+
+#################################
+# connected to Animal class that's written above
+## Inheritance example 
+#################################
+class Cat(Animal):
+    def speak(self):
+        print("meow")
+    def __str__(self):
+        return "cat:"+str(self.name)+":"+str(self.age)+":"+str(self.color) # override previous class __str__
+    # cat go to interdimensional rift and bring back futuristic techonology 
+
+    
+#print("\n---- cat tests ----")
+my_cat = Cat(5)
+my_cat.speak() # you don't need to print it
+my_cat.set_name("baritooks")
+my_cat.set_skin_color("white")
+print(my_cat.get_age())
+print(my_cat)
+c = Cat(5)
+c.set_name("fluffy")
+print(c)
+c.speak()
+print(c.get_age())
+# a.speak() # error because there is no speak method for Animal class
+print(f"#############################")
+
+################# YOU TRY IT #####################
+class Rabbit(Animal):
+    """ A subclass of Animal """
+    def speak(self):
+        """ prints the string meep to the console """
+        # your code here
+        print("Meeps!")
+
+    def __str__(self):
+        """ Repr as "rabbit", a colon, self's name, a colon, self's age """
+        # your code here
+        return (f"Animal is: {self.name}, age is: {self.age}, and the color is {self.color}")
+   
+r = Rabbit(5)
+print(r)
+r.speak()
+r.set_name('fluffy')
+print(r)
+
+my_rabbit = Rabbit(7)
+print(my_rabbit.get_age())
+print(my_rabbit.get_name())
+my_rabbit.set_name("Bubble")
+print(my_rabbit.get_name())
+my_rabbit.set_skin_color("blue")
+print(my_rabbit.get_color()) # get the color from the function
+##################################
+print(f"### Inheritance example")
+##################################
+class Person(Animal):
+    def __init__(self, name, age):
+        Animal.__init__(self, age)
+        self.set_name(name)
+        self.friends = []
+    def get_friends(self):
+        return self.friends.copy()
+    def speak(self):
+        print("hello")
+    def add_friend(self, fname):
+        if fname not in self.friends:
+            self.friends.append(fname)
+    def age_diff(self, other):
+        diff = self.age - other.age
+        print(abs(diff), "year difference")
+    def __str__(self):
+        return "person:"+str(self.name)+":"+str(self.age)
+
+#print("\n---- person tests ----")
+
+person1 = Person("Asep", 25)
+print(person1)
+person1.add_friend('Ujang') # List all the friends in a list
+print(person1.get_friends())
+person1.speak() #print "hello"
+person2 = Person("RahmatBungkakaresh", 30)
+person1.age_diff(person2) # There is 5 years difference betewen asep and rahmhat
+print(person1.get_age())
+p1 = Person("jack", 30)
+p2 = Person("jill", 25)
+# print(p1.get_name())
+# print(p1.get_age())
+# print(p2.get_name())
+# print(p2.get_age())
+# print(p1)
+# p1.speak()
+# p1.age_diff(p2)
+# p1.add_friend('ana')
+# p1.add_friend('bob')
+# p1.add_friend('bob')
+# print(p1.get_friends())
+print(f"################")
+######################## YOU TRY IT #####################
+# Write the function according to this spec
+def make_pets(d):
+    """ d is a dict mapping a Person obj to a Cat obj
+    Prints, on each line, the name of a person, 
+    a colon, and the name of that person's cat """
+    # your code here
+    # map a person name and a person cat 
+    # Person(Animal) and Cat(Animal)
+    for k,v in d.items():
+        # k is person
+        # v is cat
+        # get_name() from the class attributes
+        print(k.get_name()+":"+v.get_name()) # we need to print it because its returns something
+p1 = Person("ana", 86)
+p2 = Person("james", 7)
+c1 = Cat(1)
+c1.set_name("furball")
+c2 = Cat(1)
+c2.set_name("fluffsphere")
+
+d = {p1:c1, p2:c2}
+make_pets(d)  # prints ana:furball
+       #        james:fluffsphere
+
+##########################################################
+print(f"##################################")
+##################################
+### Inheritance example
+##################################
+class Student(Person):
+    def __init__(self, name, age, major=None):
+        Person.__init__(self, name, age)
+        self.major = major
+    def __str__(self):
+        return "student:"+str(self.name)+":"+str(self.age)+":"+str(self.major)
+    def change_major(self, major):
+        self.major = major
+    def speak(self):
+        r = random.random()
+        if r < 0.25:
+            print("--> i have homework")
+        elif 0.25 <= r < 0.5:
+            print("--> i need sleep")
+        elif 0.5 <= r < 0.75:
+            print("--> i should eat")
         else:
-            greatest_common_divisor = gcd(self.num, self.denom)
-            top = int(self.num/greatest_common_divisor)
-            bottom = int(self.denom/greatest_common_divisor)
-            return Fraction(top, bottom)
+            print("--> i'm zooming")
+
+student1 = Student("boris", 25, "Computer science")
+student1.add_friend("Jacobian A")
+print(student1.get_friends()) # so basically get friends from the class person still works on this class
+student1.set_skin_color("blue")
+print(student1.get_color()) # added a blue attribute on skin color
+
+student1.speak() #prints the random proabilities on speak function withint student class
+# print("\n---- student tests ----")
+s1 = Student('alice', 20, "CS")
+s2 = Student('beth', 18)
+# print(s1)
+# print(s2)
+# print(s1.get_name(),"says:")
+# s1.speak()
+# print(s2.get_name(),"says:")
+# s2.speak()
+
+
+##################################
+print(f"### Use of class variables########" )
+##################################
+class Rabbit(Animal):
+    # rabbit Class that inherit an animal class
+    # a class variable, tag, shared across all instances
+    tag = 1
+    def __init__(self, age, parent1=None, parent2=None):
+        Animal.__init__(self, age)
+        self.p1 = parent1
+        self.p2 = parent2
+        self.rid = Rabbit.tag
+        Rabbit.tag += 1
+    def get_rid(self):
+        # zfill used to add leading zeroes 
+        # 00001 instead of 1 or 00526 instead of 526
+        return str(self.rid).zfill(5)
+    def get_parent1(self):
+        return self.p1
+    def get_parent2(self):
+        return self.p2
+    def __add__(self, oth):
+        # returning object of same type as this class
+        return Rabbit(0, self, oth)
+        # adding rabbit together?
+    def __eq__(self, oth):
+        # compare the ids of self and other's parents
+        # don't care about the order of the parents
+        parents_same = (self.p1.rid == oth.p1.rid and self.p2.rid == oth.p2.rid)
+        parents_opp = (self.p2.rid == oth.p1.rid and self.p1.rid == oth.p2.rid)
+        return parents_same or parents_opp
     def __str__(self):
-        """ Returns a string representation of self """
-        # Note this is not the version with the numerator 
-        # only when the denomiator is 1
-        return str(self.num) + "/" + str(self.denom)
-    
-f1 = Fraction(5,1)
-f1r = f1.reduce()
-print(f1r)          # prints 5/1 not 5
-print(type(f1r))    # prints <class '__main__.Fraction'>
+        return "rabbit:"+ self.get_rid()
 
-####################################################
+# # print("\n---- rabbit tests ----")
+# # print("---- testing creating rabbits ----")
+r1 = Rabbit(3)
+print(r1.get_age()) # the age of rabbit1 is 3 years old
+print(r1.get_parent1()) # rabbit1 doesn't have a parents
+print(r1.get_parent2())
+
+r2 = Rabbit(4)
+r3 = Rabbit(5)
+rabbit_combination = r1 + r2
+print(rabbit_combination)
+print("r1:", r1)
+print("r2:", r2)
+print("r3:", r3)
+print("r1 parent1:", r1.get_parent1())
+print("r1 parent2:", r1.get_parent2())
+
+print("---- testing rabbit addition ----")
+r4 = r1+r2   # r1.__add__(r2)
+print("r1:", r1)
+print("r2:", r2)
+print("r4:", r4)
+print("r4 parent1:", r4.get_parent1()) # the parents of rabbit4 is rabbit 1 and rabbit 2
+print("r4 parent2:", r4.get_parent2()) 
+
+# # print("---- testing rabbit equality ----")
+r5 = r3+r4
+r6 = r4+r3
+r7 = r3+r4
+r7.set_skin_color("green")
+print(r7.get_color()) # added  color to rabbit 7 
+print(r6==r7) #this returns True because the parents is  the same which is rabbit 4 and rabbit 3
+# print("r3:", r3)
+# print("r4:", r4)
+# print("r5:", r5)
+# print("r6:", r6)
+# print("r5 parent1:", r5.get_parent1())
+# print("r5 parent2:", r5.get_parent2())
+# print("r6 parent1:", r6.get_parent1())
+# print("r6 parent2:", r6.get_parent2())
+# print("r5 and r6 have same parents?", r5 == r6)
+# print("r4 and r6 have same parents?", r4 == r6)
 
 
+##################################################
+######### ANSWERS TO YOU TRY IT ###############
+##################################################
 
-###########################################################
-############### ANSWERS TO YOU TRY IT ####################
-###########################################################
-# Q1. Add code to the init method to check that 
-# * the type of center is a Coordinate obj and 
-# * the type of radius is an int. 
-# If either are not these types, raise a ValueError.
-class Circle(object):
-    def __init__(self, center, radius):
-        if type(center) == Coordinate and type(radius) == int:
-            self.center = center
-            self.radius = radius
+# Q1. Write a function that meets this spec.
+def make_animals(L1, L2):
+    """ L1 is a list if ints and L2 is a list of str
+        L1 and L2 have the same length
+    Creates a list of Animals the same length as L1 and L2.
+    An animal object at index i has the age and name
+    corresponding to the same index in L1 and L2, respectively. """
+    pass
+    L = []
+    for i in range(len(L1)):  # i will be 0 then 1 then 2
+        a = Animal(L1[i]) # L1[i] is the age
+        a.set_name(L2[i]) # L2[i] is the name
+        L.append(a)
+    return L        
+
+# L1 = [2,5,1]
+# L2 = ["blobfish", "crazyant", "parafox"]
+# animals = make_animals(L1, L2)
+# print(animals)     # note this prints a list of animal objects
+# for i in animals:  # this prints the indivdual animals
+#     print(i)
+
+# Q2. 
+class Rabbit(Animal):
+    """ A subclass of Animal """
+    def speak(self):
+        """ prints the string meep to the console """
+        print('meep')
+    def __str__(self):
+        """ Repr as "rabbit", a colon, its name, a colon, its age """
+        return "rabbit:"+str(self.get_name())+":"+str(self.get_age())
+   
+# c = Rabbit(5)
+# print(c)
+# c.speak()
+# c.set_name('fluffy')
+# print(c)
+
+
+# Q3. Write the function according to this spec
+def make_pets(d):
+    """ d is a dict mapping a Person obj to a Cat obj
+    Prints the name of each person, a colon, and the 
+    name of that person's cat """
+    pass
+    for k,v in d.items():
+        # k is Person
+        # v is Cat
+        pname = k.get_name()
+        cname = v.get_name()
+        print(pname+":"+cname)
+
+
+# p1 = Person("ana", 35)
+# p2 = Person("james", 6)
+# c1 = Cat(1)
+# c1.set_name("furball")
+# c2 = Cat(1)
+# c2.set_name("fluffsphere")
+
+# d = {p1:c1, p2:c2}
+# make_pets(d)  # prints ana:furball
+#       #        james:fluffsphere
+
+
+##################################################
+print(f"######### AT HOME ###############")
+##################################################
+# Write the class Employee as a subclass of Person
+class Employee(Person):
+    """ An Employee contains an extra data attribute, salary as an int """
+    def __init__(self, name, age):
+        """ initializes self as a Person with a salary data attribute, initially 0 """
+        self.name = name
+        self.age = age
+        self.salary = 0
+    def get_salary(self):
+        """ returns self's salary """
+        return self.salary # the salary which is 0 at beginning
+    def set_salary(self, s):
+        """ s is an int
+        Sets self's salary data attribute to s """
+        pass
+    def salary_change(self, n):
+        """ n is an int (positive or negative)
+        Adds n to self's salary. If the result is negative, sets 
+        self's salary to 0. Otherwise sets self's salary to the new value. """
+        pass
+    def has_friends(self):
+        """ Returns True if self's friend list is empty and False otherwise """
+        pass    
+    def past_salaries_list(self):
+        """ Keeps track of all salaries self has had in the order they've changed. 
+        i.e. whenever the salary changes, keep track of it.
+        Hint: you may need to add an additional data attribute to Employee.
+        Returns a copy of the list of all salaries self has had, in order. """
+        pass
+    def past_salary_freq(self):
+        """ Returns a dictionary where the key is a salary number and the 
+        value is how many times self's salary has changed to that number. """
+        pass
+
+# # For example:
+# e = Employee("ana", 35)
+# print(e.get_salary())   # prints 0
+# e.set_salary(1000)
+# print(e.get_salary())   # prints 1000
+# e.salary_change(2000)
+# print(e.get_salary())   # prints 3000
+# e.salary_change(-50000)
+# print(e.get_salary())   # prints 0
+# print(e.has_friends())  # prints False
+# e.add_friend("bob")
+# print(e.has_friends())  # prints True
+# print(e.past_salaries_list())  # prints [0, 1000, 3000, 0]
+# print(e.past_salary_freq())  # prints {0: 2, 1000: 1, 3000: 1}
+
+
+# Write a function that meets this specification
+def counts(L):
+    """ L is a list of Employee and Person objects 
+    Returns a tuple of a count of:
+      * how many Person objects are in L
+      * how many Employee objects are in L 
+      * the number of unique names among Employee and Person objects """
+    pass
+
+# For example:
+# make employees and people
+# L = []
+# L.append(Person('ana',8))
+# L.append(Person('bob',25))
+# L.append(Employee('ana',35))
+# L.append(Employee('cara',18))
+# L.append(Employee('dan',53))
+# # call function
+# print(counts(L))    # prints (2,3,4)
+
+
+##################################################
+######### ANSWERS TO AT HOME #######
+################################################
+class Employee(Person):
+    """ An Employee contains an extra data attribute, salary as an int """
+    def __init__(self, name, age):
+        """ initializes self as a Person with a salary data attribute, initially 0 """
+        Person.__init__(self,name, age)
+        self.salary = 0
+        self.list_salaries = [0]
+    def get_salary(self):
+        """ returns self's salary """
+        return self.salary
+    def set_salary(self, s):
+        """ s is an int
+        Sets self's salary data attribute to s """
+        self.salary = s
+        self.list_salaries.append(s)
+    def salary_change(self, n):
+        """ n is an int (positive or negative)
+        Adds n to self's salary. If the result is negative, sets 
+        self's salary to 0. Otherwise sets self's salary to the new value. """
+        a = self.salary + n
+        if a < 0:
+            self.salary = 0
         else:
-            raise ValueError
-
-# center = Coordinate(2, 2)
-# my_circle = Circle(center, 2)   # no error
-
-# my_circle = Circle(2, 2)    # raises ValueError
-# my_circle = Circle(center, 'two')  # raises ValueError
-
-
-# Q2. Implement the missing get_inverse and invert methods below
-class SimpleFraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def get_inverse(self):
-        """ Returns a float representing 1/self """
-        return self.denom/self.num
-    def invert(self):
-        """ Sets self's numerator to its denominator and vice versa.
-            Does not return anything. """
-        (self.num, self.denom) = (self.denom, self.num)
-
-# f1 = SimpleFraction(3,4)
-# print(f1.get_inverse())   # prints 1.33333333 (note this one returns value)
-# f1.invert()               # acts on data attributes internally, no return
-# print(f1.num, f1.denom)   # prints 4 3 
-
-
-# Q3. Modify the str method to print just the numerator when 
-# the denominator is 1. Otherwise it prints the numerator 
-# then a / then the denominator, as before. 
-class Fraction(object):
-    """ A number represented as a fraction """
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def __str__(self):
-        """ Returns a string representation of self """
-        # modify this
-        if self.denom == 1:
-            return str(self.num)
-        return str(self.num) + "/" + str(self.denom)
-
-# a = Fraction(1,4)
-# b = Fraction(3,1)
-# print(a)     # prints 1/4
-# print(b)     # prints 3
-
-# Q4. Modify the code to return a Fraction object when denominator is 1
-class Fraction(object):
-    def __init__(self, num, denom):
-        """ num and denom are integers """
-        self.num = num
-        self.denom = denom
-    def reduce(self):
-        def gcd(n, d):
-            while d != 0:
-                (d, n) = (n%d, d)
-            return n
-        if self.denom == 0:
-            return None
-        elif self.denom == 1:
-            # modify this
-            return Fraction(self.num,1)
-        else:
-            greatest_common_divisor = gcd(self.num, self.denom)
-            top = int(self.num/greatest_common_divisor)
-            bottom = int(self.denom/greatest_common_divisor)
-            return Fraction(top, bottom)
-    def __str__(self):
-        """ Returns a string representation of self """
-        return str(self.num) + "/" + str(self.denom)
+            self.salary = a
+        self.list_salaries.append(self.salary)
+    def has_friends(self):
+        """ Returns True if self's friend list is empty and False otherwise """
+        return len(self.friends) != 0
+    def past_salaries_list(self):
+        """ Keeps track of all salaries self has had in the order they've changed. 
+        i.e. whenever the salary changes, keep track of it.
+        Hint: you may need to add an additional data attribute to Employee.
+        Returns a copy of the list of all salaries self has had, in order. """
+        return self.list_salaries.copy()
+    def past_salary_freq(self):
+        """ Keeps track of all salaries self has had in the order they've changed. 
+        i.e. whenever the salary changes, keep track of it.
+        Hint: you may need to add an additional data attribute to Employee.
+        Returns a dictionary where the key is a salary number and the value 
+        is how many times self's salary has changed to that value. """
+        d = {}
+        for i in self.list_salaries:
+            if i in d:
+                d[i] += 1
+            else:
+                d[i] = 1
+        return d
     
-# f1 = Fraction(5,1)
-# f1r = f1.reduce()
-# print(f1r)          # prints 5/1 not 5
-# print(type(f1r))    # prints <class '__main__.Fraction'>
+# # For example:
+# e = Employee("ana", 35)
+# print(e.get_salary())   # prints 0
+# e.set_salary(1000)
+# print(e.get_salary())   # prints 1000
+# e.salary_change(2000)
+# print(e.get_salary())   # prints 3000
+# e.salary_change(-50000)
+# print(e.get_salary())   # prints 0
+# print(e.has_friends())  # prints False
+# e.add_friend("bob")
+# print(e.has_friends())  # prints True
+# print(e.past_salaries_list())  # prints [0, 1000, 3000, 0]
+# print(e.past_salary_freq())  # prints {0: 2, 1000: 1, 3000: 1}
 
 
-###########################################################
-print(f"############### AT HOME ####################")
-###########################################################
-#Question 1.
-# Add a method to the Circle class that allows you to print a Circle object
-# (you decide how to best represent it!)
-class Circle(object):
-    def __init__(self, center, radius):
-        self.radius = radius
-        self.center = center
-    def is_inside(self, point):
-        return point.distance(self.center) < self.radius
+# def counts(L):
+#     """ L is a list of Employee and Person objects 
+#     Returns a tuple of a count of:
+#       * how many Person objects are in L
+#       * how many Employee objects are in L 
+#       * the number of unique names among Employee and Person objects """
+#     counte, countp, countn = 0,0,0
+#     names = []
+#     for i in L:
+#         if type(i) == Person:
+#             countp += 1
+#         elif type(i) == Employee:
+#             counte += 1
+#         if i.get_name() not in names:
+#             names.append(i.get_name())
+#             countn += 1
+#     return (countp, counte, countn)
 
-    def __str__(self):
-        return "circle: "+str(self.center)+", "+str(self.radius)
-
-center = Coordinate(3,2)
-print(center)
-my_circle = Circle(center, 5)
-print(my_circle)
-point = Coordinate(5,5)
-print(my_circle.is_inside(point))
-#Question 2.
-# Implement a method in Fraction class such that the operator ** works
-#print(a**b) # works after you define it on two Fraction objects
-class Fract(object):
-    # we define __init__ dunder method
-    def __init__(self, numerator, denominator):
-        self.num = numerator
-        self.denom = denominator
-    # initialize dunder power method 
-    def __float__(self):
-        return self.num/self.denom
-    def __str__(self):
-        return (f"{self.num} / {self.denom}")
-    def __pow__(self, other):
-        return (f"{float(self)**float(other)}")
-f1 = Fract(3,4)
-f2 = Fract(5,4)
-print(f1**f2)
-print(f1)
-f1 = Fract(4,1)
-f2 = Fract(1,2)
-print(f1**f2)    # prints 2.0
-
-###########################################################
-############# ANSWERS TO AT HOME ###################
-###########################################################
-# Question 1.
-# class Circle(object):
-#     def __init__(self, center, radius):
-#         self.center = center
-#         self.radius = radius
-#     def is_inside(self, point):
-#         return point.distance(self.center) < self.radius
-#     # one way
-#     def __str__(self):
-#         return "circle: "+str(self.center)+", "+str(self.radius)
-#     # alternate cooler way :)
-#     # prints radius number of dashes to the left and right of the center
-#     def __str__(self):
-#         return "-"*self.radius+str(self.center)+"-"*self.radius
-    
-# center = Coordinate(2, 2)
-# my_circle = Circle(center, 5)
-# print(my_circle)
+# For example:
+# make employees and people
+# L = []
+# L.append(Person('ana',8))
+# L.append(Person('bob',25))
+# L.append(Employee('ana',35))
+# L.append(Employee('cara',18))
+# L.append(Employee('dan',53))
+# # call function
+# print(counts(L))    # prints (2,3,4)
 
 
-# Question 2.
-# class Fraction(object):
-#     def __init__(self, num, denom):
-#         self.num = num
-#         self.denom = denom
-#     def __float__(self):
-#         return self.num/self.denom
-#     def __str__(self):
-#         return str(self.num) + "/" + str(self.denom)
-#     def __pow__(self, other):
-#         return float(self)**float(other)
-    
-# f1 = Fraction(4,1)
-# f2 = Fraction(1,2)
-# print(f1**f2)    # prints 2.0
+x = 0
+if x == 0:
+    print("x is equal to zero")
+elif x >= 0:
+    print("x is greater than zero")
+else:
+    print("x is less than zero")
