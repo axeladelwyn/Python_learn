@@ -636,3 +636,122 @@ elif x >= 0:
     print("x is greater than zero")
 else:
     print("x is less than zero")
+
+
+class Person(object):
+    def __init__(self,name):
+        """Assumes name a string. Create a person"""
+        self._name = name
+        try:
+            last_blank = name.rindex(' ')
+            self._last_name = name[last_blank+1:]
+        except:
+            self._last_name = name
+        self.birthday = None
+
+    def get_name(self):
+        """Returns self's full name"""
+        return self._name
+
+    def get_last_name(self):
+        """Return self's last name"""
+        return self._last_name
+
+    def set_birthday(self, birthdate):
+        """Returns self's last name"""
+        return self._last_name
+    
+    def get_age(self):
+        """Returns self's current gae in days"""
+        if self._birthday == None:
+            raise ValueError
+        return (datetime.date.today() - self._birthday).days
+
+    def __lt__(self, other):
+        """Assume other a Person Returns True if self precedes other in alphabetical order, and False otherwise.
+        Comparison is based on last names, but fi these are the same full name are compared."""
+        if self._last_name == other._last_name:
+            return self._name < other._name
+        return self._last_name < other._last_name
+    def __str__(self):
+        """Returns self's name"""
+        return self._name
+
+
+class MIT_person(Person):
+    _next_id_num = 0 #identification number
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.id_num = MIT_person._next_id_num
+        MIT_person._next_id_num += 1
+    def get_id_num(self):
+        return self.id_num
+
+    def __lt__(self, other):
+        return self.id_num < other.id_num
+
+    def is_student(self):
+        return isinstance(self, Student)
+
+p1 = MIT_person("Barbara beaver")
+p1 = MIT_person("Martk Guttag")
+p2 = MIT_person("Billy Bob Beaver")
+p3 = MIT_person("Billy Bob Beaver")
+p4 = Person("Bily Bob Beaver")
+print(str(p1) + "\'s id number is " + str(p1.get_id_num()))
+
+print("p1 < p2 = ", p1 < p2)
+print("p3 < p2 = ", p3 < p2)
+print("p4 < p1 = ", p4 < p1)
+
+
+print(isinstance('ab', str) == isinstance(str, str))
+
+print(f"############################")
+class Politician(Person):
+    """A politician is a person who can belong to a political party"""
+    def __init__(self, name, party = None):
+        """ name and party are strings"""
+        self._name = name
+        self.party = party
+    def get_party(self):
+        """returns the party to which self belongs"""
+        return self.party
+    def might_agree(self, other):
+        """ returns True if self and other belong to the same party or at
+        least one of them does not belong to a party"""
+        if self.party == other.party or self.party is None or other.party is None:
+            return True
+        return False
+
+politician1 = Politician("Alice", "Party A")
+politician2 = Politician("Bob", "Party A")
+politician3 = Politician("Jacib", "Party B")
+
+print(politician3)
+
+print(politician1.might_agree(politician2)) # this will print tru because both of them in party A
+
+class Student(MIT_person):
+    pass
+
+class UG(Student):
+    def __init__(self,name, class_year):
+        super().__init__(name)
+        self._year = class_year
+    def get_class(self):
+        return self._year
+
+class Grad(Student):
+    pass
+
+p5 = Grad("Buzz Aldrin")
+p6 = UG("Billy Beaver", 1984)
+print(f"{p5} is a graduate student is {isinstance(p5, Grad)}")
+print(f"{p5} is a undergraduate student is {isinstance(p5, UG)}")
+
+
+print(f"{p5} is a student is {p5.is_student()}")
+print(f"{p6} is a student is {p6.is_student()}")
+print(f"{p3} is a student is {p3.is_student()}")
