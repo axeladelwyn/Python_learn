@@ -35,9 +35,9 @@ print()
 # print(SimpleWorkout.__dict__.values())   
 
 my_workout = SimpleWorkout('9/30/2021 1:35 PM', '9/30/2021 1:57 PM', 200)
-# print(my_workout.__dict__.keys())  # dict_keys(['start', 'end', 'calories', 'icon', 'kind'])
+print(my_workout.__dict__.keys())  # dict_keys(['start', 'end', 'calories', 'icon', 'kind'])
 print()
-# print(my_workout.__dict__.values()) 
+print(my_workout.__dict__.values()) 
 
                      
 # =============================================================================
