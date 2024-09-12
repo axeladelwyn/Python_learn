@@ -13,8 +13,8 @@ class Container(object):
         Returns the length of the container list
         """
         # Your code here
-        self.length = len(self.myList)
-        return self.length
+        length = len(self.myList)
+        return length
 
     def add(self, elem):
         """
@@ -25,7 +25,7 @@ class Container(object):
         self.myList.append(elem)
 
     def __str__(self):
-        return f"{self.myList}"
+        return f"{self.myList} (length: {self.size()})"
 
 class Queue(Container):
     """
