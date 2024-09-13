@@ -96,11 +96,23 @@ class SwimWorkout(Workout):
         self.icon = '🏊‍'
         self.type = 'Swimming'
         self.pace = pace
-        
+        self.numlaps = 0
+
     def get_pace(self):
         """Return the pace of the workout"""
         return self.pace
     
+    def count_lap(self):
+        self.numlaps += 1
+
+    def get_average_laptime(self):
+        if self.numlaps == 0:
+            return None
+        total_duration = self.get_duration().total_seconds()
+        return total_duration / self.numlaps
+
+    def __str__(self):
+        return super().__str__() + f" Num Laps: {self.numlaps}"
     def get_calories(self):
         """Return the total calories burned in the swim workout
            using the SwimWorkout cal_per_hr class variable"""
@@ -110,18 +122,23 @@ class SwimWorkout(Workout):
         else:
             return self.calories
     
-
+    def end_swim_workout(self):
+        return f"Workout Complete\n"  + super().__str__()
+        
 # Exercise 1: Modify the Swim Workout Class 
 # 1) Create a new attribute for swim workout called numlaps
+    # Done
+
 
 # 2) Write a new method count_lap which updates numlaps by +1 if called. 
-
+    # Done
 # 3) Write a new method get_average_laptime which calculates the average 
 # laptime for a workout. If numlaps is zero, return None. 
 # Hint: what does get_duration() return?)
+    # Done
 
 # 4) Overwrite the __str__ dunder method to display Num Laps
-
+    #done
 # 5) Write a new method end_swim_workout which prints Workout Complete and 
 # the Workout summary given by the updated __str__ dunder method
 
@@ -131,15 +148,18 @@ class SwimWorkout(Workout):
 # Exercise 2: Using the New Class 
 
 # 1) Create a new swim workout starting at '9/30/2021 2:20 PM', ending at '9/30/2021 2:50 PM'
-
+swim_workout = SwimWorkout('9/30/2021 2:20 PM','9/30/2021 2:50 PM')
 # 2) Swim 40 laps
+for i in range(1,41):
+    swim_workout.count_lap()
 
 # 3) Print average laptime
-
+print(f"Average lap time: {swim_workout.get_average_laptime()} seconds")
 
 # 4) Display workout summary
+print(swim_workout)
+print(swim_workout.end_swim_workout())
 
-    
     
         
 
