@@ -35,7 +35,7 @@ def time_wrapper(f, L):
 L_N = [1]
 for i in range(8):
     L_N.append(L_N[-1]*10)
-
+print(L_N)
 ## time each function
 # time_wrapper(c_to_f,  L_N)
 # time_wrapper(mysum, L_N)
@@ -94,7 +94,32 @@ L2_b = [1, 10, 100, 1000, 10000]
 # count_wrapper(mysum, L1)
 # count_wrapper(square, L2_a)
 # count_wrapper(square, L2_b)
+def g(L, e):
+    for i in range(100):
+        for e1 in L:
+            if e1 == e:
+                return True
+    return False
+# O(n)
+def h (L, e):
+    for i in range(e):
+        for e1 in L:
+            if e1 == e:
+                return True
+    return False
+# O(e * n)
 
+def int_to_str(i):
+    digits = '0123456789'
+    if i == 0:
+        return '0'
+    result = ''
+    while i > 0:
+        result = digits[i%10] + result
+        i = i//10
+    return result
+convert = int_to_str(500)
+print(convert)
 
 # fib_cache = {}
 
@@ -114,3 +139,62 @@ L2_b = [1, 10, 100, 1000, 10000]
 # print(fibonnaci(15))
 # print(fib_cache)
 # print(fib_cache[2])
+
+def f(x):
+    ans = 0
+    # constant time
+    for i in range(1000):
+        ans += 1
+    print("Number of additions so far" , ans)
+    # takes time x
+    for i in range(x):
+        ans += 1
+    print("Number of additions so far" , ans)
+    for i in range(x):
+        for j in range(x):
+            ans += 1
+            ans += 1
+    print("Number of additions so far" , ans)
+    return ans
+answer = f(1000)
+print(answer)    
+
+
+def add_digits(n):
+    string_rep = int_to_str(n)
+    val = 0
+    for c in string_rep:
+        val += int(c)
+    return val
+digits = add_digits(500)
+print(digits)
+
+
+def is_subset(L1, L2):
+    for e1 in L1:
+        matched = False
+        for e2 in L2:
+            if e1 == e2:
+                matched = True
+                break
+        if not matched:
+            return False
+    return True
+L1 = [1,2,3]
+L2 = [2,3,4]
+print(is_subset(L1,L2))
+
+
+def intersect(L1, L2):
+    tmp = []
+    for e1 in L1:
+        for e2 in L2:
+            if e1 == e2:
+                tmp.append(e1)
+                break
+    result = []
+    for e in tmp:
+        if e not in result:
+            result.append(e)
+    return result
+print(intersect(L1, L2))
