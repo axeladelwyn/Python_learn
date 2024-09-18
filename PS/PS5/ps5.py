@@ -5,7 +5,9 @@
 """
 
 from PIL import Image, ImageFont, ImageDraw
+import os
 import numpy
+
 
 
 def make_matrix(color):
@@ -69,7 +71,13 @@ def img_to_pix(filename):
                  in form (R,G,B) such as [(0,0,0),(255,255,255),(38,29,58)...] for RGB image
                  in form L such as [60,66,72...] for BW image
     """
-    pass
+
+    with Image.open(filename) as img:
+        pixels = list(img.getdata())
+    return pixels
+
+
+
 
 
 def pix_to_img(pixels_list, size, mode):
@@ -88,7 +96,11 @@ def pix_to_img(pixels_list, size, mode):
     returns:
         img: Image object made from list of pixels
     """
-    pass
+    img = Image.new(mode,size)
+
+    img.putdata(pixels_list)
+
+    return img
 
 
 def filter(pixels_list, color):
@@ -100,7 +112,12 @@ def filter(pixels_list, color):
     returns: list of pixels in same format as earlier functions,
     transformed by matrix multiplication
     """
-    pass
+    transformation_matrix = make_matrix(color)
+
+
+    transformed_pixels = [matrix_multiply(pixel, transformation_matrix) for pixel in pixels_list]
+    
+    return transformed_pixels
 
 
 def extract_end_bits(num_end_bits, pixel):
@@ -202,23 +219,33 @@ def main():
 
     # Uncomment the following lines to test part 1
 
-    #im = Image.open('image_15.png')
-    #width, height = im.size
-    #pixels = img_to_pix('image_15.png')
+    im = Image.open('PS/PS5/image_15.png')
+    width, height = im.size
+    pixels = img_to_pix('PS/PS5/image_15.png')
+    
 
-    #non_filtered_pixels = filter(pixels,'none')
-    #im = pix_to_img(non_filtered_pixels, (width, height), 'RGB')
+    pixels_list = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]
+    size = (2, 2)
+    mode = 'RGB'
+
+    non_filtered_pixels = filter(pixels,'none')
+    im = pix_to_img(pixels_list, size, mode)
     # im.show()
+    im.save("output_image.png") 
+    # os.system("output_image.")
 
-    #red_filtered_pixels = filter(pixels,'red')
-    #im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
-    # im2.show()
+
+    red_filtered_pixels = filter(pixels,'red')
+    im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
+    im2.show()
+    im2.save("second_image.png")
+    os.system("second_image.png")
 
     # Uncomment the following lines to test part 2
-    #im = reveal_image('hidden1.bmp')
+    # im = reveal_image('hidden1.bmp')
     # im.show()
 
-    #im2 = reveal_image('hidden2.bmp')
+    # im2 = reveal_image('hidden2.bmp')
     # im2.show()
     
 

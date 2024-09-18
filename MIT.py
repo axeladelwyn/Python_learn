@@ -144,7 +144,7 @@ def gen_subsets(L):
         new.append(small+extra)
     return smaller+new
 
-#print(gen_subsets([1,2,3]))
+print(gen_subsets([1,2,3]))
 
 ## Theta(2**x)
 def fib_recur(x):
