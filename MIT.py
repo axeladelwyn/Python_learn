@@ -12,7 +12,8 @@ def add(x, y):
 ## Theta(1)
 def convert_to_km(m):
     return m*1.609
-
+# whatever the input is there is only one operation 
+# so its constant
 ## ----------------------------------
 ## LINEAR Theta(n)
 ## Specify what n is in terms of input
@@ -47,13 +48,15 @@ def fact_recur(x):
         return 1
     else: 
         return x*fact_recur(x - 1)
-
+# print(fact_recur(20))
 ## Theta(n_months)
 def compound(invest, interest, n_months):
     total=0
     for i in range(n_months):
        total = total * interest + invest
     return total
+
+
 
 ## Theta(n)
 def fib_iter(n):
@@ -69,7 +72,7 @@ def fib_iter(n):
             fib_i = fib_ii
             fib_ii = tmp + fib_ii
         return fib_ii 
-
+# print(fib_iter(15))
 
 ## ----------------------------------
 ## POLYNOMIAL Theta(n**2)
@@ -90,13 +93,14 @@ def g(n):
 def is_subset(L1, L2):
     for e1 in L1:
         matched = False
-        for e2 in L2:
-            if e1 == e2:
+        for e2 in L2: # iterate through all the element in L2
+            if e1 == e2: # checking if e1 is the same as 2
                 matched = True
                 break
         if not matched:
             return False
     return True
+# print(is_subset([1,2,3,4,5,6],[1,2,3,5,7,812,5,1,1]))
 
 ## Theta(len(L1)*len(L2))
 def intersect(L1, L2):
