@@ -150,7 +150,16 @@ def extract_end_bits(num_end_bits, pixel):
     Returns:
         The num_end_bits of pixel, as an integer (BW) or tuple of integers (RGB).
     """
-    pass
+    bitmask = (1 << num_end_bits) -1
+
+    if isinstance(pixel,int):
+        return pixel & bitmask
+    
+    elif isinstance(pixel, tuple) and len(pixel) == 3:
+        return tuple(channel & bitmask for channel in pixel)
+
+    else:
+        raise ValueError("Invalid pixel format. Must be an integer or an RGB tuple.")
 
 
 def reveal_bw_image(filename):
@@ -161,7 +170,19 @@ def reveal_bw_image(filename):
     Returns:
         result: an Image object containing the hidden image
     """
-    pass
+    im = Image.open(filename).convert('L')
+    width, height = im.size
+    result = Image.new('L', (width, height))
+    pixels = im.load()
+    result_pixels = result.load()
+    
+    for y in range(height):
+        for x in range(width):
+            value = pixels[x, y]
+            lsb = extract_end_bits(1, value)
+            result_pixels[x, y] = 255 if lsb else 0
+    
+    return result
 
 
 def reveal_color_image(filename):
@@ -172,7 +193,19 @@ def reveal_color_image(filename):
     Returns:
         result: an Image object containing the hidden image
     """
-    pass
+    im = Image.open(filename).convert('RGB')
+    width, height = im.size
+    result = Image.new('RGB', (width, height))
+    pixels = im.load()
+    result_pixels = result.load()
+    
+    for y in range(height):
+        for x in range(width):
+            pixel = pixels[x, y]
+            r, g, b = extract_end_bits(3, pixel)
+            result_pixels[x, y] = (r, g, b)
+    
+    return result
 
 
 def reveal_image(filename):
@@ -215,7 +248,6 @@ def draw_kerb(filename, kerb):
 
 
 def main():
-    pass
 
     # Uncomment the following lines to test part 1
 
@@ -224,29 +256,25 @@ def main():
     pixels = img_to_pix('PS/PS5/image_15.png')
     
 
-    pixels_list = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]
-    size = (2, 2)
-    mode = 'RGB'
+    # pixels_list = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)]
+    # size = (2, 2)
+    # mode = 'RGB'
 
-    non_filtered_pixels = filter(pixels,'none')
-    im = pix_to_img(pixels_list, size, mode)
+    # non_filtered_pixels = filter(pixels,'none')
+    # im = pix_to_img(pixels_list, size, mode)
     # im.show()
-    im.save("output_image.png") 
-    # os.system("output_image.")
-
-
-    red_filtered_pixels = filter(pixels,'red')
-    im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
-    im2.show()
-    im2.save("second_image.png")
-    os.system("second_image.png")
+    # im.save("output_image.png") 
+    
+    # red_filtered_pixels = filter(pixels,'red')
+    # im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
+    # im2.show()
 
     # Uncomment the following lines to test part 2
-    # im = reveal_image('hidden1.bmp')
-    # im.show()
+    im = reveal_image('PS/PS5/hidden1.bmp')
+    im.show()
 
-    # im2 = reveal_image('hidden2.bmp')
-    # im2.show()
+    im2 = reveal_image('PS/PS5/hidden2.bmp')
+    im2.show()
     
 
 if __name__ == '__main__':
