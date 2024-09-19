@@ -6,7 +6,7 @@ def running_product(a):
         if product == a:
             return True
     return False
-
+# theta(a) ? linear?
 
 def tricky_f(L, L2):
     """ L and L2 are lists of equal length """
@@ -19,7 +19,7 @@ def tricky_f(L, L2):
         if e2 in L:
             inL2 = True
     return inL and inL2
-
+# theta(L) + theta(L2)
 def sum_f(n):
     """ n > 0 """
     answer = 0
@@ -27,3 +27,9 @@ def sum_f(n):
         answer += n%10
         n = int(n/10)
     return answer
+# theta(n) ?
+
+def search(L,e):
+    return (e in L)
+my_list = [1,2,3,5,6,7,8,9,10]
+print(search(my_list,9))
