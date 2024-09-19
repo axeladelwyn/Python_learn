@@ -78,14 +78,22 @@ def selection_sort(L, detail = False):
 ############################
 def selection_sort_var(L, detail = False):
     for i in range(len(L)):
+        # 0,1,2,3,4,5
         smallest = L[i]
+        # number starting from the first index
         smallestj = i
+        # the index itself 0,1,2,3,4,5,6
         for j in range(i, len(L)):
+            # j is 0,1,2,3,4,5
             if L[j] < L[smallestj]:
+                # if the value at index j smaller than value at index smallest j
                 smallest = L[j]
+                # assign smallest into index L[j] , the first index
                 smallestj = j
+                # assign smallest j into j
             if detail == True:
                 print(L)
+        # Swapping L[i] into L[smallest]
         L[i], L[smallestj] = L[smallestj], L[i]
         print()
 
@@ -94,7 +102,6 @@ def selection_sort_var(L, detail = False):
 # print('L:       ', L)
 # selection_sort_var(L, True)
 # print('Sorted L:', L)
-
 
 ############################
 ## Merge Sort Example
@@ -135,3 +142,47 @@ def merge_sort(L, detail = False):
 # L = [8, 4, 1, 6, 5, 11, 2, 0]
 # print('L:       ', L)
 # print(merge_sort(L, True))
+
+def merge_sort(lst):
+    if len(lst) <= 1:
+        return lst
+
+    # Split the list into two halves
+    mid = len(lst) // 2
+    left_half = merge_sort(lst[:mid])
+    right_half = merge_sort(lst[mid:])
+
+    # Merge the two halves
+    return merge(left_half, right_half)
+
+def merge(left, right):
+    sorted_list = []
+    i = 0
+    j = 0
+
+    # Compare elements from left and right and merge them in sorted order
+    while i < len(left) and j < len(right):
+        if sum(left[i]) <= sum(right[j]):
+            sorted_list.append(left[i])
+            i += 1
+        else:
+            sorted_list.append(right[j])
+            j += 1
+
+    # Add remaining elements from left
+    while i < len(left):
+        sorted_list.append(left[i])
+        i += 1
+
+    # Add remaining elements from right
+    while j < len(right):
+        sorted_list.append(right[j])
+        j += 1
+
+    return sorted_list
+
+tuples_list = [(1, 8), (1, 2, 3), (5, 2), (4,), (6, 1, 1), (3, 3)]
+sorted_tuples = merge_sort(tuples_list)
+
+print("Sorted list based on the sum of integers in tuples:")
+print(sorted_tuples)
