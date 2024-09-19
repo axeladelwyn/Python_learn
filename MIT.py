@@ -1,188 +1,122 @@
 import random
 import time
+import matplotlib.pyplot as plt
 
-############################
-## Bogo/Random/Monkey Sort Example
-############################
-def is_sorted(L):
-    i = 0
-    j = len(L)
-    while i + 1 < j:
-        if L[i] > L[i + 1]:
-            return False
-        i += 1
-    return True
- 
-def bogo_sort(L):
-    count = 0
-    while not is_sorted(L):
-        random.shuffle(L)
-        count += 1
-    return count
- 
-# print("--- BOGO SORT ---")
-# # L = []
-# # for i in range(0, 9):
-# #     L.append(random.randint(0, 100))
-# L = [8, 4, 1, 6, 5, 11, 2, 0]
-# print('L:       ', L)
-# t0 = time.time()
-# count = bogo_sort(L)
-# print('Sorted L:', L)
-# print(count, "shuffles and sorting took: ", time.time() - t0, "s")
+#set line width
+plt.rcParams['lines.linewidth'] = 2
+#set font size for titles
+plt.rcParams['axes.titlesize'] = 16
+#set font size for labels on axes
+plt.rcParams['axes.labelsize'] = 16
+#set size of numbers on x-axis
+plt.rcParams['xtick.labelsize'] = 10
+#set size of numbers on y-axis
+plt.rcParams['ytick.labelsize'] = 10
+#set size of ticks on x-axis
+plt.rcParams['xtick.major.size'] = 5
+#set size of ticks on y-axis
+plt.rcParams['ytick.major.size'] = 5
+#set size of markers
+plt.rcParams['lines.markersize'] = 10
+#set number of examples shown in legends
+plt.rcParams['legend.numpoints'] = 1
+#set the font size globally
+plt.rcParams['xtick.labelsize']=20
+plt.rcParams['ytick.labelsize']=20
+plt.rcParams['axes.labelsize'] = 26 
+plt.rcParams['axes.titlesize'] = 26 
+plt.rcParams["figure.figsize"] = (15,10)
 
-############################
-## Bubble Sort Example
-############################
-def bubble_sort(L, detail = False):
-    did_swap = True
-    while did_swap:
-        did_swap = False
-        for j in range(1, len(L)):
-            if L[j-1] > L[j]:
-                did_swap = True
-                L[j],L[j-1] = L[j-1],L[j]
-            if detail == True:
-                print(L)
-        print()
+## -------------------------- ##
+## Experiment is rolling a die once.
+## Repeat the experiment 10000 times. This is the simulation!
+## Count how many times a 1 shows up among 10000 sims.
+## Find the prob of rolling a 1.
+def prob_dice(side):
+    dice = ['.',':',':.','::','::.',':::']
+    Nsims = 1000000
+    one_count = 0
+    for i in range(Nsims):
+        roll = random.choice(dice)
+        if roll == side:
+            one_count += 1
+    print(one_count/Nsims)
 
-# print("--- BUBBLE SORT ---")
-# L = [8, 4, 1, 6, 5, 11, 2, 0]
-# print('L:       ', L)
-# bubble_sort(L, True)
-# print('Sorted L:', L)
-  
-
-############################
-## Selection Sort Example
-############################
-def selection_sort(L, detail = False):
-    for i in range(len(L)):
-        for j in range(i, len(L)):
-            if L[j] < L[i]:
-                L[i], L[j] = L[j], L[i]
-            if detail == True:
-                print(L)
-        print()
-
-# print("--- SELECTION SORT ---")
-# L = [8, 4, 1, 6, 5, 11, 2, 0]
-# print('L:       ', L)
-# selection_sort(L, True)
-# print('Sorted L:', L)
+# prob_dice('.')
+# prob_dice('::')
 
 
-############################
-## Variation on Selection Sort Example
-## Don't swap every time
-############################
-def selection_sort_var(L, detail = False):
-    for i in range(len(L)):
-        # 0,1,2,3,4,5
-        smallest = L[i]
-        # number starting from the first index
-        smallestj = i
-        # the index itself 0,1,2,3,4,5,6
-        for j in range(i, len(L)):
-            # j is 0,1,2,3,4,5
-            if L[j] < L[smallestj]:
-                # if the value at index j smaller than value at index smallest j
-                smallest = L[j]
-                # assign smallest into index L[j] , the first index
-                smallestj = j
-                # assign smallest j into j
-            if detail == True:
-                print(L)
-        # Swapping L[i] into L[smallest]
-        L[i], L[smallestj] = L[smallestj], L[i]
-        print()
+## -------------------------- ##
+## Experiment is rolling a die 7 times and keeping track of ::
+## Repeat the experiment 10000 times. This is the simulation!
+## Count how many times a 1 shows up at least 3 times.
+## Find the prob of a die coming up as 1 at least 3 times out of 7 rolls.
 
-# print("--- VARIATION SELECTION SORT ---")
-# L = [8, 4, 1, 6, 5, 11, 2, 0]
-# print('L:       ', L)
-# selection_sort_var(L, True)
-# print('Sorted L:', L)
-
-############################
-## Merge Sort Example
-############################
-def merge(left, right):
-    result = []
-    i,j = 0, 0
-    while i < len(left) and j < len(right):
-        if left[i] < right[j]:
-            result.append(left[i])
-            i += 1
-        else:
-            result.append(right[j])
-            j += 1
-    # one list is empty
-    while (i < len(left)):
-        result.append(left[i])
-        i += 1
-    while (j < len(right)):
-        result.append(right[j])
-        j += 1
-    return result
+def prob_dice_atleast(Nrolls, n_at_least):
+    """ Nrolls is how many dice rolls to do
+        n_at_least is how many times '::' should come up in the Nrolls """
+    dice = ['.',':',':.','::','::.',':::']
+    Nsims = 1000000
+    how_many_matched = []
+    for i in range(Nsims):
+        matched = 0
+        for i in range(Nrolls):
+            roll = random.choice(dice)
+            if roll == '::':
+                matched += 1
+        how_many_matched.append(matched)
     
-def merge_sort(L, detail = False):
-    if len(L) < 2:
-        return L[:]
-    else:
-        middle = len(L)//2
-        # divide
-        left = merge_sort(L[:middle], detail)
-        right = merge_sort(L[middle:], detail)
-        if detail == True:
-            print("Merging", left, "and", right)
-        # conquer
-        return merge(left, right)
+    at_least_this = 0
+    for i in how_many_matched:
+        if i >= n_at_least:
+            at_least_this += 1
+    print(at_least_this/len(how_many_matched))
+
+
+# prob_dice_atleast(7, 3)        
+# prob_dice_atleast(1, 1) # should match prob_dice('::')       
     
-# print("--- MERGE SORT ---")
-# L = [8, 4, 1, 6, 5, 11, 2, 0]
-# print('L:       ', L)
-# print(merge_sort(L, True))
 
-def merge_sort(lst):
-    if len(lst) <= 1:
-        return lst
+## -------------------------- ##
+## Water runs through a faucet somewhere between 
+## 1 gallons per minute and 3 gallongs per minute. 
+## 1. Experiment is getting a random value between 1 and 3. Then 
+##    calculating the time it takes to fill the pool with that value.
+## 2. Repeat the experiment 10000 times. This is the simulation!
+## 3. Print the average time it takes to fill the pool. 
 
-    # Split the list into two halves
-    mid = len(lst) // 2
-    left_half = merge_sort(lst[:mid])
-    right_half = merge_sort(lst[mid:])
+def fill_pool(size):
+    flow_rate = []
+    fill_time = []
+    Npoints = 10000
+    for i in range(Npoints):
+        r = 1+2*random.random() # random number between 1 and 3
+        flow_rate.append(r)
+        fill_time.append(size/r)
 
-    # Merge the two halves
-    return merge(left_half, right_half)
+    print('avg flow_rate:', sum(flow_rate)/len(flow_rate))
+    print('avg fill_time', sum(fill_time)/len(fill_time))
+    
+    plt.figure()
+    plt.scatter(range(Npoints), flow_rate, s=1)
+    plt.title('Flow Rate')
+    plt.xlabel('Index')
+    plt.ylabel('Flow Rate')
+    
+    plt.figure()
+    plt.scatter(range(Npoints), fill_time, s=1)
+    plt.title('Fill Time')
+    plt.xlabel('Index')
+    plt.ylabel('Fill Time')
+    
+    plt.show()  # Display all figures
 
-def merge(left, right):
-    sorted_list = []
-    i = 0
-    j = 0
+fill_pool(2)
+fill_pool(600)
 
-    # Compare elements from left and right and merge them in sorted order
-    while i < len(left) and j < len(right):
-        if sum(left[i]) <= sum(right[j]):
-            sorted_list.append(left[i])
-            i += 1
-        else:
-            sorted_list.append(right[j])
-            j += 1
 
-    # Add remaining elements from left
-    while i < len(left):
-        sorted_list.append(left[i])
-        i += 1
 
-    # Add remaining elements from right
-    while j < len(right):
-        sorted_list.append(right[j])
-        j += 1
 
-    return sorted_list
 
-tuples_list = [(1, 8), (1, 2, 3), (5, 2), (4,), (6, 1, 1), (3, 3)]
-sorted_tuples = merge_sort(tuples_list)
 
-print("Sorted list based on the sum of integers in tuples:")
-print(sorted_tuples)
+

@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(8, 6))
+
 
 #set line width
 plt.rcParams['lines.linewidth'] = 2
@@ -19,8 +21,8 @@ plt.rcParams['lines.markersize'] = 10
 #set number of examples shown in legends
 plt.rcParams['legend.numpoints'] = 1
 #set the font size globally
-plt.rcParams['xtick.labelsize']=20
-plt.rcParams['ytick.labelsize']=20
+plt.rcParams['xtick.labelsize']= 20
+plt.rcParams['ytick.labelsize']= 20
 plt.rcParams['axes.labelsize'] = 26 
 plt.rcParams['axes.titlesize'] = 26 
 plt.rcParams["figure.figsize"] = (15,10)
@@ -50,8 +52,12 @@ testSamples = [0,5,3,6,15,2,1,4,25,20,7,21,22,23,9,8,24,10,12,11]
 testValues =  [0,25,9,36,225,4,1,16,625,400,49,441,484,529,81,64,576,100,144,121]
 ## plot connects the points
 # plt.plot(testSamples, testValues)
+
+
 ## scatter plot does not connect the points
 # plt.scatter(testSamples, testValues)
+# plt.show()
+
 
 # ##### Plotting many lines
 # plt.plot(nVals, linear)
@@ -75,13 +81,13 @@ testValues =  [0,25,9,36,225,4,1,16,625,400,49,441,484,529,81,64,576,100,144,121
 # plt.figure('expo')
 # plt.plot(nVals, newExpo)
 
-
 ################
 ## Temperature with axes options
 ################
 ###### Plotting temperatures and changing xaxis
-months = range(1, 13, 1)
-temps = [28,32,39,48,59,68,75,73,66,54,45,34]
+# months = range(1, 13, 1)
+# temps = [28,32,39,48,59,68,75,73,66,54,45,34]
+# plt.figure('temperature in months')
 # plt.plot(months, temps)
 
 # # ## Add axes, labels, and a title
@@ -91,11 +97,13 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 
 # # #### Start axis at 1 to 12
 # plt.xlim(1, 12)
+
 # # ### Change x axes labels
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12))
+
 # # #### Change x axes labels to custom labels
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
-#             ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
+            # ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
 
 # # #### add/remove grid lines
 # plt.grid()
@@ -120,7 +128,7 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
 
 # plt.legend(loc = 'best', fontsize=20) # position it automatically
-
+# plt.show()
 ###### Plotting multiple lines and changing their line style
 # months = range(1, 13, 1)           
 # boston = [28,32,39,48,59,68,75,73,66,54,45,34]
@@ -135,6 +143,7 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.ylabel('Degrees F')
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
+
 
 # # ###### Plotting with keywords (same plot as below)
 # months = range(1, 13, 1)           
@@ -154,6 +163,7 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
 
+
 ###### Plotting with styled markers (same plot as above)
 # months = range(1, 13, 1)           
 # boston = [28,32,39,48,59,68,75,73,66,54,45,34]
@@ -168,6 +178,8 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.ylabel(('Degrees F'))
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
+# plt.show()
+
 
 ###### Plotting with keywords, change width
 # months = range(1, 13, 1)           
@@ -186,12 +198,14 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.ylabel(('Degrees F'))
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
+# plt.show()
+
 
 ###### Using subplots
 # months = range(1, 13, 1)           
 # boston = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.subplot(2,1,1)
-# # plt.ylim(0, 100)
+# plt.ylim(0, 100)
 # plt.plot(months, boston, 'b-')
 # plt.ylabel('Degrees F')
 # plt.title('Boston vs. Phoenix')
@@ -199,11 +213,12 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
 # phoenix = [54,57,61,68,77,86,91,90,84,73,61,54]
 # plt.subplot(2,1,2)
-# # plt.ylim(0, 100)
+# plt.ylim(0, 100)
 # plt.plot(months, phoenix, 'r--')
 # plt.ylabel('Degrees F')
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
+# plt.show()
 
 ###### Using subplots
 # months = range(1, 13, 1)           
@@ -255,9 +270,9 @@ def getUSPop(fileName):
 # plt.xlabel('Year')
 # plt.ylabel('Population')
 
-####### Change the scale to semilog
+###### Change the scale to semilog
 # plt.semilogy()   
-
+# plt.show()
 
 ####################################
 ## Country Population Example 
@@ -286,7 +301,7 @@ pops = getCountryPops('lec25_countryPops.txt')
 # plt.ylabel('Population')
 # plt.xlabel('Country Rank Based on Size')
 # plt.semilogy()
-
+# plt.show()
 # ## Investigate the first digits
 pops = getCountryPops('lec25_countryPops.txt')
 firstDigits = []
@@ -296,10 +311,11 @@ for p in pops:
 
 ### Plot the fist digits, as found in order in the file
 # plt.plot(firstDigits)
-
+# plt.show()
 ### Plot the histogram to show Benford's law
-# plt.hist(firstDigits, bins = 9)
 
+# plt.hist(firstDigits, bins = 9)
+# plt.show()
 
 ####################################
 ## Comparing Cities Example 
@@ -350,6 +366,7 @@ def getAverageTemps():
 
 ## print average temperatures for all cities (and plot them)
 # getAverageTemps()
+# plt.show()
 
 def getAvgTempForYear(tem, dat, y):
     yearlyTemps = []
@@ -392,7 +409,7 @@ if False:
         plt.xlabel('Years since 1961')
         plt.ylabel(('Degrees F'))
         plt.legend(loc = 'best')
-        
+    plt.show()
         
 ##### plot yearly average temperature for a city, including range
 
@@ -431,7 +448,7 @@ if False:
         plt.xlabel('Years since 1961')
         plt.ylabel(('Degrees F'))
         plt.legend(loc = 'best')
-        
+    plt.show()
         
 ## look at number of days with a particular temperature by city
 
@@ -448,7 +465,15 @@ def getDayDistributionForCity(city, year):
         tRound = round(t)
         d[tRound] += 1
     return d
-
+distribution = getDayDistributionForCity('BOSTON','2015')
+print(distribution)
+temps = list(range(100))
+plt.figure('Distribution of Temps for BOSTON in 2015')
+plt.bar(temps, distribution)
+plt.title('Temperature Distribution for BOSTON in 2015')
+plt.xlabel('Temperature')
+plt.ylabel('Number of days')
+plt.show()
 if False:
     plt.close()
     for c in ('BOSTON','SAN DIEGO', 'MIAMI'):  # try for BOSTON, SAN DIEGO, MIAMI
@@ -462,6 +487,7 @@ if False:
         plt.title('Temperature Distribution: ' + c)
         plt.xlabel('Temperature')
         plt.ylabel(('Number of days'))
+    plt.show()
 
 
 if False:
@@ -482,6 +508,7 @@ if False:
         plt.xlabel('Temperature')
         plt.ylabel(('Number of days'))
         plt.legend(loc = 'best')
+    plt.show()
 
 if False:
     plt.close()
@@ -507,9 +534,8 @@ if False:
        
         #plt.title('Temperature Distribution: ' + c)
         plt.legend(loc = 'best')
-
+    plt.show()
     
-
 
     
 
